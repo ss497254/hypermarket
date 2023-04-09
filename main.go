@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
+	"os/signal"
 	"sas/cmd"
 	"sas/config"
 	"sas/database"
@@ -42,6 +44,18 @@ func start(cmd *cobra.Command, args []string) {
 	app.Use(middleware.NotFound)
 
 	serverAddress := fmt.Sprintf("%s:%s", conf.SERVER_IP, conf.SERVER_PORT)
+
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+
+	go func() {
+		<-c
+
+		fmt.Println("Gracefully shutting down")
+		database.Close()
+
+		app.Shutdown()
+	}()
 
 	log.Fatal(app.Listen(serverAddress))
 }

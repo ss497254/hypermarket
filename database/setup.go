@@ -1,61 +1,31 @@
 package database
 
 import (
-	"context"
-	"fmt"
+	"database/sql"
 	"log"
 	"sas/config"
-	"time"
 
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	_ "modernc.org/sqlite"
 )
 
-type mg struct {
-	Client *mongo.Client
-	Db     *mongo.Database
-}
-
-var MongoInstance *mg
+var DB *sql.DB
 
 func ConnectDB() {
-	if MongoInstance != nil {
-		return
-	}
-
 	conf := config.GetConfig()
 
-	db_url := fmt.Sprintf(
-		"mongodb+srv://%s:%s@%s.%s/?retryWrites=true&w=majority",
-		conf.DB_USERNAME,
-		conf.DB_PASSWORD,
-		conf.DB_CLUSTER,
-		conf.DB_HOST,
-	)
-
-	client, err := mongo.NewClient(options.Client().ApplyURI(db_url))
+	db, err := sql.Open("sqlite", conf.DB_PATH)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	err = client.Connect(ctx)
-	if err != nil {
+	if err := initPragmas(db); err != nil {
+		db.Close()
 		log.Fatal(err)
 	}
 
-	fmt.Println("Database Connected Sucessfully!")
-
-	MongoInstance = &mg{
-		Client: client,
-		Db:     client.Database(conf.DB_NAME),
-	}
+	DB = db
 }
 
-func Close() {
-	if err := MongoInstance.Client.Disconnect(context.Background()); err != nil {
-		log.Println(err)
-	}
+func Close() error {
+	return DB.Close()
 }

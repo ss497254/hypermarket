@@ -7,5 +7,10 @@ import (
 )
 
 func Initalize(app *fiber.App) {
-	app.Get("/me", middleware.Authenticated, GetAdmin)
+	adminApp := app.Group("/admin")
+
+	adminApp.Post("/login", AdminLogin)
+	adminApp.Post("/register", AdminRegister)
+	adminApp.Post("/all", GetAllAdmins)
+	adminApp.Get("/me", middleware.Authenticated, GetAdmin)
 }

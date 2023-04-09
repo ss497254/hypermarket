@@ -11,11 +11,7 @@ type Config struct {
 	SERVER_IP       string `json:"server_ip"`
 	SERVER_PORT     string `json:"server_port"`
 	SHOW_CONFIG     string `json:"show_config"`
-	DB_HOST         string `json:"db_host"`
-	DB_USERNAME     string `json:"db_user"`
-	DB_PASSWORD     string `json:"db_password"`
-	DB_NAME         string `json:"db_name"`
-	DB_CLUSTER      string `json:"db_cluster"`
+	DB_PATH         string `json:"db_path"`
 	COOKIE_NAME     string `json:"cookie_name"`
 	COOKIE_SECRET   string `json:"cookie_secret"`
 	COOKIE_SECURE   string `json:"cookie_secure"`
@@ -35,7 +31,7 @@ func GenerateDemoConfig(path string) {
 		SERVER_IP:       "127.0.0.1",
 		SERVER_PORT:     "8080",
 		SHOW_CONFIG:     "true",
-		DB_NAME:         "dev_v1",
+		DB_PATH:         "test.db",
 		COOKIE_NAME:     "fan",
 		COOKIE_SECRET:   "#DASR#GERT#",
 		COOKIE_SAMESITE: "lax",
