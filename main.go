@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"sas/cmd"
 	"sas/config"
@@ -40,7 +41,9 @@ func start(cmd *cobra.Command, args []string) {
 
 	app.Use(middleware.NotFound)
 
-	log.Fatal(app.Listen("127.0.0.1:" + conf.PORT))
+	serverAddress := fmt.Sprintf("%s:%s", conf.SERVER_IP, conf.SERVER_PORT)
+
+	log.Fatal(app.Listen(serverAddress))
 }
 
 func main() {

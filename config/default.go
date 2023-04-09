@@ -1,11 +1,15 @@
 package config
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
+	"os"
 )
 
 type Config struct {
-	PORT            string `json:"port"`
+	SERVER_IP       string `json:"server_ip"`
+	SERVER_PORT     string `json:"server_port"`
 	SHOW_CONFIG     string `json:"show_config"`
 	DB_HOST         string `json:"db_host"`
 	DB_USERNAME     string `json:"db_user"`
@@ -23,21 +27,36 @@ type Config struct {
 var config *Config
 
 func GenerateDemoConfig(path string) {
+	f, _ := os.OpenFile(path, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
+	defer f.Close()
 
-}
-
-func SetUpConfig(path string) {
-	config = &Config{
-		PORT:            "8080",
+	content, err := json.MarshalIndent(Config{
+		SERVER_IP:       "127.0.0.1",
+		SERVER_PORT:     "8080",
 		SHOW_CONFIG:     "true",
-		DB_NAME:         "go-test-1",
-		COOKIE_NAME:     "fin",
-		COOKIE_SECRET:   ")Ff@#$RSAD(*&IFcxR32edfs",
+		DB_NAME:         "dev_v1",
+		COOKIE_NAME:     "fan",
+		COOKIE_SECRET:   "#DASR#GERT#",
 		COOKIE_SAMESITE: "lax",
 		COOKIE_DOMAIN:   "localhost",
 		COOKIE_MAXAGE:   86400 * 30, // 30 days
 		COOKIE_SECURE:   "false",
+	}, "", "	")
+
+	if err != nil {
+		fmt.Println(err)
 	}
+
+	f.WriteString(string(content))
+}
+
+func SetUpConfig(path string) {
+	data, err := os.ReadFile(path)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	json.Unmarshal(data, &config)
 }
 
 func GetConfig() *Config {
