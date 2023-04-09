@@ -4,27 +4,30 @@ import (
 	"fmt"
 )
 
-type config struct {
-	PORT              string
-	SHOW_CONFIG       string
-	DB_HOST           string
-	DB_USERNAME       string
-	DB_PASSWORD       string
-	DB_NAME           string
-	DB_CLUSTER        string
-	COOKIE_NAME       string
-	COOKIE_SECRET     string
-	COOKIE_EXPIRES_IN string
-	COOKIE_SECURE     string
-	COOKIE_SAMESITE   string
-	COOKIE_DOMAIN     string
-	COOKIE_MAXAGE     int
+type Config struct {
+	PORT            string `json:"port"`
+	SHOW_CONFIG     string `json:"show_config"`
+	DB_HOST         string `json:"db_host"`
+	DB_USERNAME     string `json:"db_user"`
+	DB_PASSWORD     string `json:"db_password"`
+	DB_NAME         string `json:"db_name"`
+	DB_CLUSTER      string `json:"db_cluster"`
+	COOKIE_NAME     string `json:"cookie_name"`
+	COOKIE_SECRET   string `json:"cookie_secret"`
+	COOKIE_SECURE   string `json:"cookie_secure"`
+	COOKIE_SAMESITE string `json:"cookie_samesite"`
+	COOKIE_DOMAIN   string `json:"cookie_domain"`
+	COOKIE_MAXAGE   int    `json:"cookie_maxage"`
 }
 
-var Config *config
+var config *Config
 
-func SetUpConfig() {
-	Config = &config{
+func GenerateDemoConfig(path string) {
+
+}
+
+func SetUpConfig(path string) {
+	config = &Config{
 		PORT:            "8080",
 		SHOW_CONFIG:     "true",
 		DB_NAME:         "go-test-1",
@@ -37,10 +40,14 @@ func SetUpConfig() {
 	}
 }
 
+func GetConfig() *Config {
+	return config
+}
+
 func ShowConfigDetails() {
-	if Config.SHOW_CONFIG == "true" {
-		fmt.Printf("%+v\n", Config)
+	if config.SHOW_CONFIG == "true" {
+		fmt.Printf("%+v\n", config)
 	} else {
-		fmt.Println("Config is not available!")
+		fmt.Println("config is not available!")
 	}
 }

@@ -2,24 +2,29 @@ package main
 
 import (
 	"log"
-	"server/config"
-	"server/database"
-	"server/middleware"
-	"server/routes"
+	"sas/cmd"
+	"sas/config"
+	"sas/database"
+	"sas/middleware"
+	"sas/routes"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/spf13/cobra"
 )
 
-func main() {
+func start(cmd *cobra.Command, args []string) {
+	configFilePath := cmd.Flag("config").Value.String()
+
+	config.SetUpConfig(configFilePath)
+	database.ConnectDB()
+
+	conf := config.GetConfig()
+
 	app := fiber.New(fiber.Config{
 		AppName: "Supermarket automation system",
-		// Prefork: true,
 	})
-
-	config.SetUpConfig()
-	database.ConnectDB()
 
 	app.Use(logger.New())
 	app.Use(middleware.Init)
@@ -35,5 +40,10 @@ func main() {
 
 	app.Use(middleware.NotFound)
 
-	log.Fatal(app.Listen("127.0.0.1:" + config.Config.PORT))
+	log.Fatal(app.Listen("127.0.0.1:" + conf.PORT))
+}
+
+func main() {
+	cmd.Init(start)
+	cmd.Execute()
 }

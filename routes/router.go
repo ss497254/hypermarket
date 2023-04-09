@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"server/middleware"
+	"sas/middleware"
 
 	"github.com/gofiber/fiber/v2"
 )

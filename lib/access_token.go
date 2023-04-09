@@ -1,26 +1,30 @@
 package lib
 
 import (
-	"server/config"
+	"sas/config"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
 )
 
 func SendAccessToken(payload jwt.MapClaims, c *fiber.Ctx) {
-	jwt, err := GenerateJWT(payload, config.Config.COOKIE_SECRET, config.Config.COOKIE_MAXAGE)
+	conf := config.GetConfig()
+
+	jwt, err := GenerateJWT(payload, conf.COOKIE_SECRET, conf.COOKIE_MAXAGE)
 
 	if err == nil {
 		c.Cookie(&fiber.Cookie{
-			Name:     config.Config.COOKIE_NAME,
+			Name:     conf.COOKIE_NAME,
 			Value:    jwt,
-			Domain:   config.Config.COOKIE_DOMAIN,
-			MaxAge:   config.Config.COOKIE_MAXAGE,
-			SameSite: config.Config.COOKIE_SAMESITE,
+			Domain:   conf.COOKIE_DOMAIN,
+			MaxAge:   conf.COOKIE_MAXAGE,
+			SameSite: conf.COOKIE_SAMESITE,
 		})
 	}
 }
 
 func ClearAccessToken(c *fiber.Ctx) {
-	c.ClearCookie(config.Config.COOKIE_NAME)
+	conf := config.GetConfig()
+
+	c.ClearCookie(conf.COOKIE_NAME)
 }

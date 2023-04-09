@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"server/config"
+	"sas/config"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -19,12 +19,14 @@ type mg struct {
 var MongoInstance *mg
 
 func ConnectDB() {
+	conf := config.GetConfig()
+
 	db_url := fmt.Sprintf(
 		"mongodb+srv://%s:%s@%s.%s/?retryWrites=true&w=majority",
-		config.Config.DB_USERNAME,
-		config.Config.DB_PASSWORD,
-		config.Config.DB_CLUSTER,
-		config.Config.DB_HOST,
+		conf.DB_USERNAME,
+		conf.DB_PASSWORD,
+		conf.DB_CLUSTER,
+		conf.DB_HOST,
 	)
 
 	client, err := mongo.NewClient(options.Client().ApplyURI(db_url))
@@ -44,7 +46,7 @@ func ConnectDB() {
 
 	MongoInstance = &mg{
 		Client: client,
-		Db:     client.Database(config.Config.DB_NAME),
+		Db:     client.Database(conf.DB_NAME),
 	}
 }
 
