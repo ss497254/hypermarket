@@ -11,6 +11,7 @@ import (
 	"sas/middleware"
 	"sas/routes"
 
+	"github.com/fatih/color"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
@@ -53,8 +54,9 @@ func start(cmd *cobra.Command, args []string) {
 	go func() {
 		<-c
 
-		fmt.Println("Gracefully shutting down")
+		color.Red("Gracefully shutting down")
 		database.Close()
+		color.Yellow("Database connection closed")
 
 		app.Shutdown()
 	}()

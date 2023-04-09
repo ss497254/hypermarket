@@ -19,7 +19,7 @@ const migrationsTableName = "migrations"
 func ConnectDB() {
 	conf := config.GetConfig()
 
-	db, err := sqlx.Open("sqlite", conf.DB_PATH)
+	db, err := sqlx.Connect("sqlite", conf.DB_PATH)
 	if err != nil {
 		log.Fatal(err)
 	}
