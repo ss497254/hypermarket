@@ -2,7 +2,6 @@ package database
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"sas/config"
 	"sync"
@@ -67,34 +66,4 @@ func ExecTrans(ctx context.Context, stmt string) error {
 	}
 
 	return nil
-}
-
-func AllMigrationNames() ([]string, error) {
-	checkStmt := fmt.Sprintf(`SELECT name FROM sqlite_master WHERE type='table' AND name='%s'`, migrationsTableName)
-
-	tbls, err := Query(checkStmt)
-	if err != nil {
-		return nil, err
-	}
-
-	if len(tbls) == 0 {
-		return nil, nil
-	}
-
-	migrStmt := fmt.Sprintf(`SELECT name FROM %s ORDER BY name`, migrationsTableName)
-	migr, err := Query(migrStmt)
-	if err != nil {
-		return nil, err
-	}
-
-	if len(migr) == 0 {
-		return nil, nil
-	}
-
-	return migr, nil
-}
-
-func TableNames() ([]string, error) {
-	stmt := `SELECT name FROM sqlite_master WHERE type='table'`
-	return Query(stmt)
 }

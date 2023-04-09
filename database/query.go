@@ -1,13 +1,14 @@
 package database
 
-import (
-	"log"
-)
+func GetAllTables() ([]string, error) {
+	stmt := `SELECT name FROM sqlite_master WHERE type='table'`
+	return Query(stmt)
+}
 
 func Query(query string) ([]string, error) {
 	rows, err := DB.Query(query)
 	if err != nil {
-		log.Fatal(err)
+		return nil, err
 	}
 
 	defer rows.Close()
@@ -24,4 +25,22 @@ func Query(query string) ([]string, error) {
 	}
 
 	return output, nil
+}
+
+func LastMigration() (string, error) {
+	res, err := Query("SELECT name FROM migrations ORDER BY id DESC LIMIT 1")
+	if err != nil || len(res) == 0 {
+		return "", err
+	}
+
+	return res[0], nil
+}
+
+func GetAllMigrations() ([]string, error) {
+	res, err := Query("SELECT name FROM migrations ORDER BY id DESC")
+	if err != nil || len(res) == 0 {
+		return nil, err
+	}
+
+	return res, nil
 }

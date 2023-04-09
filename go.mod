@@ -3,6 +3,7 @@ module sas
 go 1.19
 
 require (
+	github.com/fatih/color v1.15.0
 	github.com/gofiber/fiber/v2 v2.42.0
 	github.com/golang-jwt/jwt/v5 v5.0.0-rc.1
 	github.com/jmoiron/sqlx v1.3.5

@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+
+	"github.com/fatih/color"
 )
 
 func RunMigrations(ctx context.Context, source embed.FS) error {
@@ -14,21 +16,35 @@ func RunMigrations(ctx context.Context, source embed.FS) error {
 		return err
 	}
 
+	lastMigration, err := LastMigration()
+	if err != nil {
+		color.Red("Unable to get last migration")
+	}
+
+	if lastMigration != "" {
+		color.Yellow(`Skipping migrations upto "%s"`, lastMigration)
+	}
+
 	sort.Slice(knownMigrations, func(i, j int) bool {
 		return knownMigrations[i].Name() < knownMigrations[j].Name()
 	})
 
 	for _, f := range knownMigrations {
-		n := f.Name()
+		migration := f.Name()
+		migrationWithoutExt := dropExtension(migration)
 
-		fmt.Println(`Executing migration:`, n)
+		if migrationWithoutExt <= lastMigration {
+			continue
+		}
 
-		mBytes, err := source.ReadFile(n)
+		color.Green(`Executing migration "%s"`, migrationWithoutExt)
+
+		mBytes, err := source.ReadFile(migration)
 		if err != nil {
 			return err
 		}
 
-		recordStmt := fmt.Sprintf(`INSERT INTO %s (name) VALUES (%q);`, migrationsTableName, dropExtension(n))
+		recordStmt := fmt.Sprintf(`INSERT INTO %s (name) VALUES (%q);`, migrationsTableName, migrationWithoutExt)
 
 		if err := ExecTrans(ctx, string(mBytes)+recordStmt); err != nil {
 			return err
