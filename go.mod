@@ -5,6 +5,7 @@ go 1.19
 require (
 	github.com/gofiber/fiber/v2 v2.42.0
 	github.com/golang-jwt/jwt/v5 v5.0.0-rc.1
+	github.com/jmoiron/sqlx v1.3.5
 	github.com/spf13/cobra v1.7.0
 	golang.org/x/crypto v0.6.0
 	modernc.org/sqlite v1.21.1
