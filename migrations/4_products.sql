@@ -4,5 +4,5 @@ CREATE TABLE products(
     "price" INTEGER not null,
     "quantity" INTEGER not null,
     "createdAt" TIMESTAMP,
-    "updateAt" TIMESTAMP
+    "updatedAt" TIMESTAMP
 );
