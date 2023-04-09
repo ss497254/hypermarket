@@ -1,8 +1,7 @@
 package database
 
 func GetAllTables() ([]string, error) {
-	stmt := `SELECT name FROM sqlite_master WHERE type='table'`
-	return Query(stmt)
+	return Query(`SELECT name FROM sqlite_master WHERE type='table'`)
 }
 
 func Query(query string) ([]string, error) {

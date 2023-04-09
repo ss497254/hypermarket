@@ -2,15 +2,18 @@ package database
 
 import (
 	"context"
-	"embed"
 	"fmt"
+	"sas/migrations"
 	"sort"
 	"strings"
 
 	"github.com/fatih/color"
 )
 
-func RunMigrations(ctx context.Context, source embed.FS) error {
+func RunMigrations() error {
+	source := migrations.ALL
+	color.Green("Running migrations.")
+
 	knownMigrations, err := source.ReadDir(".")
 	if err != nil {
 		return err
@@ -21,9 +24,7 @@ func RunMigrations(ctx context.Context, source embed.FS) error {
 		color.Red("Unable to get last migration")
 	}
 
-	if lastMigration != "" {
-		color.Yellow(`Skipping migrations upto "%s"`, lastMigration)
-	}
+	color.Yellow(`Skipping migrations upto "%s"`, lastMigration)
 
 	sort.Slice(knownMigrations, func(i, j int) bool {
 		return knownMigrations[i].Name() < knownMigrations[j].Name()
@@ -46,12 +47,14 @@ func RunMigrations(ctx context.Context, source embed.FS) error {
 
 		recordStmt := fmt.Sprintf(`INSERT INTO %s (name) VALUES (%q);`, migrationsTableName, migrationWithoutExt)
 
+		ctx := context.Background()
 		if err := ExecTrans(ctx, string(mBytes)+recordStmt); err != nil {
 			return err
 		}
 
 	}
 
+	color.Green("Migrations ran successfully.")
 	return nil
 }
 

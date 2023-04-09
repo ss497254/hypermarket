@@ -21,7 +21,9 @@ func start(cmd *cobra.Command, args []string) {
 	configFilePath := cmd.Flag("config").Value.String()
 
 	config.SetUpConfig(configFilePath)
+
 	database.ConnectDB()
+	database.RunMigrations()
 
 	conf := config.GetConfig()
 

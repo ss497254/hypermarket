@@ -12,7 +12,7 @@ import (
 )
 
 var DB *sqlx.DB
-var Mu sync.RWMutex
+var mu sync.RWMutex
 
 const migrationsTableName = "migrations"
 
@@ -37,17 +37,17 @@ func Close() error {
 }
 
 func RLockSqlStore() {
-	Mu.RLock()
+	mu.RLock()
 }
 
 func RUnlockSqlStore() {
-	Mu.RUnlock()
+	mu.RUnlock()
 }
 
 func ExecTrans(ctx context.Context, stmt string) error {
 
-	Mu.Lock()
-	defer Mu.Unlock()
+	mu.Lock()
+	defer mu.Unlock()
 
 	tx, err := DB.BeginTx(ctx, nil)
 	if err != nil {

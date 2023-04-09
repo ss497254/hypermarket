@@ -1,18 +1,14 @@
 package routes
 
 import (
-	"context"
 	"fmt"
 	"sas/database"
-	"sas/migrations"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func SyncDB(c *fiber.Ctx) error {
-	ctx := context.Background()
-
-	err := database.RunMigrations(ctx, migrations.ALL)
+	err := database.RunMigrations()
 	if err != nil {
 		fmt.Println(err)
 
