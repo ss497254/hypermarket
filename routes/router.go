@@ -7,5 +7,5 @@ import (
 )
 
 func Initalize(app *fiber.App) {
-	app.Get("/me", middleware.Authenticated, GetUser)
+	app.Get("/me", middleware.Authenticated, GetAdmin)
 }

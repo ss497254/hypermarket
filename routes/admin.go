@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func GetUser(c *fiber.Ctx) error {
+func GetAdmin(c *fiber.Ctx) error {
 	session := c.Locals("session")
 
 	c.JSON(fiber.Map{
@@ -13,4 +13,12 @@ func GetUser(c *fiber.Ctx) error {
 	})
 
 	return nil
+}
+
+func UpdateAdmin() {
+
+}
+
+func DeleteAdmin() {
+
 }

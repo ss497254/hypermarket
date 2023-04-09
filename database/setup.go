@@ -19,6 +19,10 @@ type mg struct {
 var MongoInstance *mg
 
 func ConnectDB() {
+	if MongoInstance != nil {
+		return
+	}
+
 	conf := config.GetConfig()
 
 	db_url := fmt.Sprintf(
@@ -42,7 +46,7 @@ func ConnectDB() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Connected to MongoDB")
+	fmt.Println("Database Connected Sucessfully!")
 
 	MongoInstance = &mg{
 		Client: client,

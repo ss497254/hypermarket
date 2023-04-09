@@ -30,6 +30,7 @@ func GenerateDemoConfig(path string) {
 	f, _ := os.OpenFile(path, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	defer f.Close()
 
+	// demo config
 	content, err := json.MarshalIndent(Config{
 		SERVER_IP:       "127.0.0.1",
 		SERVER_PORT:     "8080",

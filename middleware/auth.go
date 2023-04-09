@@ -6,7 +6,7 @@ func Authenticated(c *fiber.Ctx) error {
 	session := c.Locals("session")
 
 	if session == nil {
-		return c.JSON(&fiber.Map{
+		return c.Status(401).JSON(&fiber.Map{
 			"message": "Please Login to continue",
 		})
 	}
