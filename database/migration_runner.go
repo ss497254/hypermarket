@@ -24,7 +24,9 @@ func RunMigrations() error {
 		color.Red("Unable to get last migration")
 	}
 
-	color.Yellow(`Skipping migrations upto "%s"`, lastMigration)
+	if len(lastMigration) != 0 {
+		color.Yellow(`Skipping migrations upto "%s"`, lastMigration)
+	}
 
 	sort.Slice(knownMigrations, func(i, j int) bool {
 		return knownMigrations[i].Name() < knownMigrations[j].Name()

@@ -13,7 +13,7 @@ func AdminLogin(username string, password string) error {
 		return fmt.Errorf("admin authentication failed, %s", err.Error())
 	}
 
-	if !lib.ComparePasswords(admin.Password, password) {
+	if err := lib.ComparePasswords(admin.Password, password); err != nil {
 		return fmt.Errorf("admin authentication failed")
 	}
 

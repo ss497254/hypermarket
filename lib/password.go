@@ -1,12 +1,11 @@
 package lib
 
-import "golang.org/x/crypto/bcrypt"
+import (
+	"golang.org/x/crypto/bcrypt"
+)
 
-func ComparePasswords(hashedPassword string, plainPassword string) bool {
-	byteHashPassword := []byte(hashedPassword)
-	bytePlainPassword := []byte(plainPassword)
-	err := bcrypt.CompareHashAndPassword(byteHashPassword, bytePlainPassword)
-	return err == nil
+func ComparePasswords(hashedPassword string, plainPassword string) error {
+	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(plainPassword))
 }
 
 func HashAndSalt(pwd string) string {
