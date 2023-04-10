@@ -2,6 +2,18 @@ package middleware
 
 import "github.com/gofiber/fiber/v2"
 
+func IsAuth(c *fiber.Ctx) error {
+	username := c.Locals("username")
+
+	if username != nil {
+		return c.Next()
+	}
+
+	return c.Status(401).JSON(&fiber.Map{
+		"message": "please login to continue",
+	})
+}
+
 func IsStaff(c *fiber.Ctx) error {
 	username := c.Locals("username")
 	role := c.Locals("role")

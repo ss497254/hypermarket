@@ -14,14 +14,19 @@ func Initalize(app *fiber.App) {
 	apiRoute.Post("/register", StaffRegister)
 	apiRoute.Get("/me", middleware.IsStaff, GetStaff)
 
-	adminApp := apiRoute.Group("/admin")
+	apiRoute.Get("/products", middleware.IsAuth, GetProducts)
+	apiRoute.Post("/products", middleware.IsAuth, CreateProduct)
+	apiRoute.Get("/products/:id", middleware.IsAuth, GetProductsById)
+	apiRoute.Put("/products/:id", middleware.IsAuth, UpdateProductsById)
+	apiRoute.Delete("/products/:id", middleware.IsAuth, DeleteProductsById)
 
-	adminApp.Post("/login", AdminLogin)
-	adminApp.Post("/register", AdminRegister)
-	adminApp.Get("/me", middleware.IsAdmin, GetAdmin)
+	adminRoutes := apiRoute.Group("/admin")
+	adminRoutes.Post("/login", AdminLogin)
+	adminRoutes.Post("/register", AdminRegister)
+	adminRoutes.Get("/me", middleware.IsAdmin, GetAdmin)
 
 	if utils.IsDev() {
-		developmentApp := apiRoute.Group("/dev")
-		developmentApp.Post("/query", RunQuery)
+		devRouts := apiRoute.Group("/dev")
+		devRouts.Post("/query", RunQuery)
 	}
 }

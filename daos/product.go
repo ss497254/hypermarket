@@ -6,7 +6,7 @@ import (
 )
 
 func CreateProduct(product *entities.Product) error {
-	_, err := database.DB.Exec("insert into products(name, price, quantity, password) values($1, $2, $3, $4)", product.Name, product.Price, product.Quantity)
+	_, err := database.DB.Exec("insert into products(name, price, quantity) values($1, $2, $3)", product.Name, product.Price, product.Quantity)
 
 	return err
 }
