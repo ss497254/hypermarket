@@ -2,11 +2,11 @@ package middleware
 
 import "github.com/gofiber/fiber/v2"
 
-func IsUser(c *fiber.Ctx) error {
+func IsStaff(c *fiber.Ctx) error {
 	username := c.Locals("username")
 	role := c.Locals("role")
 
-	if username != nil && role == "user" {
+	if username != nil && role == "staff" {
 		return c.Next()
 	}
 

@@ -8,7 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-func UserLogin(c *fiber.Ctx) error {
+func StaffLogin(c *fiber.Ctx) error {
 	type LoginRequest struct {
 		Username string `json:"username"`
 		Password string `json:"password"`
@@ -23,7 +23,7 @@ func UserLogin(c *fiber.Ctx) error {
 		})
 	}
 
-	if err := services.UserLogin(json.Username, json.Password); err != nil {
+	if err := services.StaffLogin(json.Username, json.Password); err != nil {
 		return c.Status(400).JSON(fiber.Map{
 			"success": false,
 			"message": "login failed",
@@ -31,7 +31,7 @@ func UserLogin(c *fiber.Ctx) error {
 		})
 	}
 
-	if err := lib.SendAccessToken(&lib.SessionToken{Username: json.Username, Role: "user"}, c); err != nil {
+	if err := lib.SendAccessToken(&lib.SessionToken{Username: json.Username, Role: "staff"}, c); err != nil {
 		color.Red(err.Error())
 	}
 

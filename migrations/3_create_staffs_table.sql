@@ -1,4 +1,4 @@
-CREATE TABLE users(
+CREATE TABLE staffs(
     "username" varchar(32) primary key not null,
     "firstName" varchar(64) not null,
     "lastName" varchar(64) not null,

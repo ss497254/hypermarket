@@ -10,11 +10,13 @@ import (
 	"sas/database"
 	"sas/middleware"
 	"sas/routes"
+	"sas/utils"
 
 	"github.com/fatih/color"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/spf13/cobra"
 )
 
@@ -32,6 +34,9 @@ func start(cmd *cobra.Command, args []string) {
 		AppName: "Supermarket automation system",
 	})
 
+	app.Use(recover.New(recover.Config{
+		EnableStackTrace: utils.IsDev(),
+	}))
 	app.Use(logger.New())
 	app.Use(middleware.Init)
 	app.Use(cors.New(cors.Config{
