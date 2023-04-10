@@ -2,14 +2,28 @@ package middleware
 
 import "github.com/gofiber/fiber/v2"
 
-func Authenticated(c *fiber.Ctx) error {
-	session := c.Locals("session")
+func IsUser(c *fiber.Ctx) error {
+	username := c.Locals("username")
+	role := c.Locals("role")
 
-	if session == nil {
-		return c.Status(401).JSON(&fiber.Map{
-			"message": "Please Login to continue",
-		})
+	if username != nil && role == "user" {
+		return c.Next()
 	}
 
-	return c.Next()
+	return c.Status(401).JSON(&fiber.Map{
+		"message": "please login to continue",
+	})
+}
+
+func IsAdmin(c *fiber.Ctx) error {
+	username := c.Locals("username")
+	role := c.Locals("role")
+
+	if username != nil && role == "admin" {
+		return c.Next()
+	}
+
+	return c.Status(401).JSON(&fiber.Map{
+		"message": "please login to continue",
+	})
 }

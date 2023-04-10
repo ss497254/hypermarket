@@ -11,7 +11,7 @@ func Initalize(app *fiber.App) {
 	adminApp := app.Group("/admin")
 	developmentApp := app.Group("/dev")
 
-	adminApp.Get("/me", middleware.Authenticated, GetAdmin)
+	adminApp.Get("/me", middleware.IsAdmin, GetAdmin)
 	adminApp.Post("/login", AdminLogin)
 	adminApp.Post("/register", AdminRegister)
 

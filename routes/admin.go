@@ -1,15 +1,19 @@
 package routes
 
 import (
+	"fmt"
+
 	"github.com/gofiber/fiber/v2"
 )
 
 func GetAdmin(c *fiber.Ctx) error {
-	session := c.Locals("session")
+	username := c.Locals("username")
+
+	fmt.Println(username)
 
 	c.JSON(fiber.Map{
-		"name":    "Saurabh Singh",
-		"session": session,
+		"name":     "Saurabh Singh",
+		"username": username,
 	})
 
 	return nil

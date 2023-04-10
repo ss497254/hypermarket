@@ -17,7 +17,8 @@ func Init(c *fiber.Ctx) error {
 		session, err := lib.ParseJWT(cookie, conf.COOKIE_SECRET)
 
 		if err == nil {
-			c.Locals("session", session)
+			c.Locals("username", session["username"])
+			c.Locals("role", session["role"])
 		}
 	}
 

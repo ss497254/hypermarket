@@ -7,8 +7,8 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-// ParseUnverifiedJWT parses JWT token and returns its claims
-// but DOES NOT verify the signature.
+var jwtParser = jwt.NewParser(jwt.WithValidMethods([]string{"HS256"}))
+
 func ParseUnverifiedJWT(token string) (jwt.MapClaims, error) {
 	claims := jwt.MapClaims{}
 
@@ -18,14 +18,10 @@ func ParseUnverifiedJWT(token string) (jwt.MapClaims, error) {
 	return claims, err
 }
 
-// ParseJWT verifies and parses JWT token and returns its claims.
 func ParseJWT(token string, verificationKey string) (jwt.MapClaims, error) {
-	parser := jwt.NewParser(jwt.WithValidMethods([]string{"HS256"}))
-
-	parsedToken, err := parser.Parse(token, func(t *jwt.Token) (any, error) {
+	parsedToken, err := jwtParser.Parse(token, func(t *jwt.Token) (any, error) {
 		return []byte(verificationKey), nil
 	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -37,7 +33,6 @@ func ParseJWT(token string, verificationKey string) (jwt.MapClaims, error) {
 	return nil, errors.New("unable to parse token")
 }
 
-// NewToken generates and returns new HS256 signed JWT token.
 func GenerateJWT(payload jwt.MapClaims, signingKey string, secondsDuration int) (string, error) {
 	seconds := time.Duration(secondsDuration) * time.Second
 
