@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"sas/controllers"
 	"sas/entities"
 	"sas/lib"
+	"sas/services"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"
@@ -23,7 +23,7 @@ func AdminLogin(c *fiber.Ctx) error {
 		})
 	}
 
-	err := controllers.AdminLogin(json.Username, json.Password)
+	err := services.AdminLogin(json.Username, json.Password)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
 			"success": false,
@@ -49,7 +49,7 @@ func AdminRegister(c *fiber.Ctx) error {
 		})
 	}
 
-	err := controllers.AdminRegister(admin)
+	err := services.AdminRegister(admin)
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{
 			"success": false,
