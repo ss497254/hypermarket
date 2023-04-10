@@ -1,10 +1,13 @@
 package routes
 
 import (
+	"net/http"
+	"sas/client"
 	"sas/middleware"
 	"sas/utils"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/filesystem"
 )
 
 func Initalize(app *fiber.App) {
@@ -29,4 +32,18 @@ func Initalize(app *fiber.App) {
 		devRouts := apiRoute.Group("/dev")
 		devRouts.Post("/query", RunQuery)
 	}
+
+	app.Use("/admin", filesystem.New(filesystem.Config{
+		Root:         http.FS(client.AdminWebsiteSource),
+		PathPrefix:   "apps/admin/out",
+		NotFoundFile: "apps/admin/out/404.html",
+		Browse:       true,
+	}))
+
+	app.Use("/", filesystem.New(filesystem.Config{
+		Root:         http.FS(client.WebsiteSource),
+		PathPrefix:   "apps/web/out",
+		NotFoundFile: "apps/web/out/404.html",
+		Browse:       true,
+	}))
 }
