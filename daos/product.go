@@ -34,7 +34,7 @@ func GetProducts() (*[]entities.Product, error) {
 	return &products, nil
 }
 
-func GetProductById(id uint32) (*entities.Product, error) {
+func GetProductById(id int) (*entities.Product, error) {
 	row := database.QueryRow("Select * from products where id=$1", id)
 
 	var product = entities.Product{}

@@ -10,11 +10,11 @@ import (
 func StaffLogin(username string, password string) error {
 	staff, err := daos.GetStaffByUsername(username)
 	if err != nil {
-		return fmt.Errorf("staff authentication failed, %s", err.Error())
+		return err
 	}
 
 	if err := lib.ComparePasswords(staff.Password, password); err != nil {
-		return fmt.Errorf("staff authentication failed")
+		return fmt.Errorf("staff authentication failed, %s", err.Error())
 	}
 
 	return nil
@@ -23,9 +23,5 @@ func StaffLogin(username string, password string) error {
 func StaffRegister(staff *entities.Staff) error {
 	staff.Password = lib.HashAndSalt(staff.Password)
 
-	if err := daos.CreateStaff(staff); err != nil {
-		return fmt.Errorf("cannot create staff, %s", err.Error())
-	}
-
-	return nil
+	return daos.CreateStaff(staff)
 }

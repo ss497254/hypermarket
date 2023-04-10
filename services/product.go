@@ -1,29 +1,20 @@
 package services
 
 import (
-	"fmt"
 	"sas/daos"
 	"sas/entities"
 )
 
-func GetProducts() (*[]entities.Product, error) {
-	product, err := daos.GetProducts()
-
-	if err != nil {
-		return nil, fmt.Errorf("unable to find product, %s", err.Error())
-	}
-
-	return product, nil
+func CreateProduct(product *entities.Product) error {
+	return daos.CreateProduct(product)
 }
 
-func GetProductById(id uint32) (*entities.Product, error) {
-	product, err := daos.GetProductById(id)
+func GetProducts() (*[]entities.Product, error) {
+	return daos.GetProducts()
+}
 
-	if err != nil {
-		return nil, fmt.Errorf("unable to find product, %s", err.Error())
-	}
-
-	return product, nil
+func GetProductById(id int) (*entities.Product, error) {
+	return daos.GetProductById(id)
 }
 
 func UpdateProductById(product *entities.Product) error {

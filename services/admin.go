@@ -1,19 +1,12 @@
 package services
 
 import (
-	"fmt"
 	"sas/daos"
 	"sas/entities"
 )
 
 func GetAdminByUsername(username string) (*entities.Admin, error) {
-	admin, err := daos.GetAdminByUsername(username)
-
-	if err != nil {
-		return nil, fmt.Errorf("unable to find admin, %s", err.Error())
-	}
-
-	return admin, nil
+	return daos.GetAdminByUsername(username)
 }
 
 func UpdateAdmin(admin *entities.Admin) error {

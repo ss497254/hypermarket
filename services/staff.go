@@ -1,19 +1,12 @@
 package services
 
 import (
-	"fmt"
 	"sas/daos"
 	"sas/entities"
 )
 
 func GetStaffByUsername(username string) (*entities.Staff, error) {
-	staff, err := daos.GetStaffByUsername(username)
-
-	if err != nil {
-		return nil, fmt.Errorf("unable to find staff, %s", err.Error())
-	}
-
-	return staff, nil
+	return daos.GetStaffByUsername(username)
 }
 
 func UpdateStaff(staff *entities.Staff) error {
