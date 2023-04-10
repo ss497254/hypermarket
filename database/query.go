@@ -28,6 +28,10 @@ func Query(query string) (*sqlx.Rows, error) {
 	return DB.Queryx(query)
 }
 
+func QueryRow(query string, args ...interface{}) *sqlx.Row {
+	return DB.QueryRowx(query, args...)
+}
+
 func LastMigration() (string, error) {
 	row := DB.QueryRowx("SELECT name FROM migrations ORDER BY id DESC LIMIT 1")
 
