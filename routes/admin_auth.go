@@ -21,6 +21,7 @@ func AdminLogin(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{
 			"success": false,
 			"message": "invalid data received",
+			"error":   err.Error(),
 		})
 	}
 
@@ -49,6 +50,7 @@ func AdminRegister(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{
 			"success": false,
 			"message": "invalid data received",
+			"error":   err.Error(),
 		})
 	}
 

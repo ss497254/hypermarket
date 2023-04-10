@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"sas/entities"
 	"sas/lib"
 	"sas/services"
 
@@ -20,6 +21,7 @@ func StaffLogin(c *fiber.Ctx) error {
 		return c.Status(400).JSON(fiber.Map{
 			"success": false,
 			"message": "invalid data received",
+			"error":   err.Error(),
 		})
 	}
 
@@ -38,5 +40,31 @@ func StaffLogin(c *fiber.Ctx) error {
 	return c.Status(200).JSON(fiber.Map{
 		"success": true,
 		"message": "login successful",
+	})
+}
+
+func StaffRegister(c *fiber.Ctx) error {
+	staff := new(entities.Staff)
+
+	if err := c.BodyParser(staff); err != nil {
+		return c.Status(400).JSON(fiber.Map{
+			"success": false,
+			"message": "invalid data received",
+			"error":   err.Error(),
+		})
+	}
+
+	err := services.StaffRegister(staff)
+	if err != nil {
+		return c.Status(400).JSON(fiber.Map{
+			"success": false,
+			"message": "registration failed",
+			"error":   err.Error(),
+		})
+	}
+
+	return c.Status(200).JSON(fiber.Map{
+		"success": true,
+		"message": "registration successful",
 	})
 }

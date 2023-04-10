@@ -12,7 +12,7 @@ func CreateProduct(product *entities.Product) error {
 }
 
 func GetProducts() (*[]entities.Product, error) {
-	rows, err := database.Query("Select * from products where id=$1")
+	rows, err := database.Query("Select * from products")
 	if err != nil {
 		return nil, err
 	}

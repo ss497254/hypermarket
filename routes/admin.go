@@ -1,22 +1,27 @@
 package routes
 
 import (
-	"fmt"
+	"sas/services"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func GetAdmin(c *fiber.Ctx) error {
-	username := c.Locals("username")
+	username := c.Locals("username").(string)
 
-	fmt.Println(username)
+	admin, err := services.GetAdminByUsername(username)
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"success": false,
+			"message": "unable to find admin",
+			"error":   err.Error(),
+		})
+	}
 
-	c.JSON(fiber.Map{
-		"name":     "Saurabh Singh",
-		"username": username,
+	return c.JSON(fiber.Map{
+		"success": true,
+		"data":    admin,
 	})
-
-	return nil
 }
 
 func UpdateAdmin() {
