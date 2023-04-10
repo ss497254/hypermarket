@@ -5,8 +5,8 @@ import (
 	"sas/lib"
 	"sas/services"
 
+	"github.com/fatih/color"
 	"github.com/gofiber/fiber/v2"
-	"github.com/golang-jwt/jwt/v5"
 )
 
 func AdminLogin(c *fiber.Ctx) error {
@@ -16,6 +16,7 @@ func AdminLogin(c *fiber.Ctx) error {
 	}
 
 	json := new(LoginRequest)
+
 	if err := c.BodyParser(json); err != nil || json.Username == "" || json.Password == "" {
 		return c.Status(400).JSON(fiber.Map{
 			"success": false,
@@ -23,8 +24,7 @@ func AdminLogin(c *fiber.Ctx) error {
 		})
 	}
 
-	err := services.AdminLogin(json.Username, json.Password)
-	if err != nil {
+	if err := services.AdminLogin(json.Username, json.Password); err != nil {
 		return c.Status(400).JSON(fiber.Map{
 			"success": false,
 			"message": "login failed",
@@ -32,7 +32,10 @@ func AdminLogin(c *fiber.Ctx) error {
 		})
 	}
 
-	lib.SendAccessToken(jwt.MapClaims{"username": json.Username}, c)
+	if err := lib.SendAccessToken(&lib.SessionToken{Username: json.Username, Role: "admin"}, c); err != nil {
+		color.Red(err.Error())
+	}
+
 	return c.Status(200).JSON(fiber.Map{
 		"success": true,
 		"message": "login successful",
