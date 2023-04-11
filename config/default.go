@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/fatih/color"
 )
 
 type Config struct {
@@ -42,7 +44,7 @@ func GenerateDemoConfig(path string) {
 		COOKIE_SECURE:   "false",
 		ADMIN_USERNAME:  "admin",
 		ADMIN_PASSWORD:  "admin",
-	}, "", "	")
+	}, "", "  ")
 
 	if err != nil {
 		fmt.Println(err)
@@ -54,10 +56,18 @@ func GenerateDemoConfig(path string) {
 func SetUpConfig(path string) {
 	data, err := os.ReadFile(path)
 	if err != nil {
+		if os.IsNotExist(err) {
+			color.Red("config.json file not found!")
+			color.Yellow(`run "generate-config" command to generate default config.json file`)
+			os.Exit(1)
+		}
 		log.Fatal(err)
 	}
 
-	json.Unmarshal(data, &config)
+	if err := json.Unmarshal(data, &config); err != nil {
+		color.Red("unable to load config.json file")
+		os.Exit(1)
+	}
 }
 
 func GetConfig() *Config {
