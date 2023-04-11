@@ -24,13 +24,10 @@ export const Drawer: React.FC<props> = ({
   if (!(permanent || open))
     cn = dir === "left" ? "-translate-x-full " : "translate-x-full ";
 
-  if (dir === "left") cn += "border-r";
-  else cn += "border-l";
-
   return (
     <>
       <div
-        className={`flex-c scroll-thin fixed left-0 top-0 z-50 h-screen w-[280px] animate border-dark-700 bg-dark-800 duration-400 ${cn} ${className}`}
+        className={`flex-c scroll-thin fixed left-0 top-0 z-50 h-screen w-[280px] animate bg-gray-900 duration-400 ${cn} ${className}`}
         tabIndex={-1}
       >
         {children}

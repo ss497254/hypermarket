@@ -1,8 +1,6 @@
 import React from "react";
 
-interface HomeProps {}
-
-const Home: React.FC<HomeProps> = () => {
+const Home = () => {
   return (
     <div className="h-screen c flex-col">
       <h2>Welcome</h2>

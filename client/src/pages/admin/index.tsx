@@ -1,3 +1,4 @@
+import withAdminLayout from "src/components/layouts/AdminLayout";
 import { useAdminStore } from "src/global-stores/useAdminStore";
 
 const Home = () => {
@@ -10,4 +11,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withAdminLayout(Home);

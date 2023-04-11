@@ -7,12 +7,8 @@ export const Head = () => {
       <title>SAS</title>
       <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       <link rel="manifest" href="/manifest.json" />
-      <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1, user-scalable=no, user-scalable=0"
-      />
       <link rel="apple-touch-startup-image" href="android-chrome-512x512.png" />
-      <meta name="theme-color" content="#0f0f0f" />
+      <meta name="theme-color" content="#fff" />
       <link
         rel="apple-touch-icon"
         sizes="180x180"
