@@ -18,6 +18,8 @@ type Config struct {
 	COOKIE_SAMESITE string `json:"cookie_samesite"`
 	COOKIE_DOMAIN   string `json:"cookie_domain"`
 	COOKIE_MAXAGE   int    `json:"cookie_maxage"`
+	ADMIN_USERNAME  string `json:"admin_username"`
+	ADMIN_PASSWORD  string `json:"admin_password"`
 }
 
 var config *Config
@@ -38,6 +40,8 @@ func GenerateDemoConfig(path string) {
 		COOKIE_DOMAIN:   "localhost",
 		COOKIE_MAXAGE:   86400 * 30, // 30 days
 		COOKIE_SECURE:   "false",
+		ADMIN_USERNAME:  "admin",
+		ADMIN_PASSWORD:  "admin",
 	}, "", "	")
 
 	if err != nil {
