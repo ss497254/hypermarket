@@ -47,3 +47,21 @@
     -webkit-transform: scale(1);
   }
 }
+
+.loading-bar {
+  position: absolute;
+  transform: translate(75%);
+  animation: initial-loading 4s ease infinite;
+}
+
+@keyframes initial-loading {
+  0% {
+    transform: translate(-50%);
+  }
+  50% {
+    transform: translate(200%);
+  }
+  100% {
+    transform: translate(-50%);
+  }
+}

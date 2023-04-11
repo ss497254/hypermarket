@@ -1,6 +1,6 @@
 {
-  "name": "Web dashboard for Godfather",
-  "short_name": "Dashboard",
+  "name": "Hypermarket",
+  "short_name": "hypermarket",
   "start_url": "/",
   "icons": [
     {
@@ -15,8 +15,8 @@
     }
   ],
   "display": "standalone",
-  "background_color": "#0f0f0f",
-  "theme_color": "#0f0f0f",
+  "background_color": "#fff",
+  "theme_color": "#fff",
   "orientation": "portrait-primary",
   "splash_pages": null,
   "scope": "/",

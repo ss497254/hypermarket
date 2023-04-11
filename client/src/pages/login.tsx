@@ -38,25 +38,6 @@ const Login = () => {
         <Button className="w-full" loading={loading} size="large" type="submit">
           Submit
         </Button>
-
-        <div className="w-full flex flex-row justify-between mt-4">
-          <p className="inline">
-            <Link
-              className="font-medium text-blue-500 dark:text-blue-400 hover:underline"
-              to="/register"
-            >
-              Register
-            </Link>
-          </p>
-          <p className="inline">
-            <Link
-              className="font-medium text-blue-500 dark:text-blue-400 hover:underline"
-              to="/forgot-password"
-            >
-              Forgot your password?
-            </Link>
-          </p>
-        </div>
       </form>
     </div>
   );

@@ -14,11 +14,13 @@ import { LogoLoading } from "src/ui/LogoLoading";
 const container = document.getElementById("root") as HTMLDivElement;
 const root = createRoot(container);
 
+const Login = lazy(() => import("src/pages/login"));
 const Home = lazy(() => import("src/pages/index"));
 const Notifications = lazy(() => import("src/pages/notifications"));
-const Login = lazy(() => import("src/pages/login"));
-const AdminRegister = lazy(() => import("src/pages/admin_register"));
-const AdminLogin = lazy(() => import("src/pages/admin_login"));
+
+const AdminHome = lazy(() => import("src/pages/admin/index"));
+const AdminLogin = lazy(() => import("src/pages/admin/login"));
+
 const Error404 = lazy(() => import("src/pages/error404"));
 
 const App = () => {
@@ -28,8 +30,8 @@ const App = () => {
       <ToastContainer />
       <Suspense fallback={<LogoLoading />}>
         <Routes>
-          <Route path="/admin/register" element={<AdminRegister />} />
           <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin" element={<AdminHome />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />

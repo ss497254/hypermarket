@@ -17,7 +17,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div
         className={[
-          "overflow-hidden text-sm rounded ring-blue-500 focus-within:ring-1 bg-neutral-100",
+          "overflow-hidden text-sm rounded ring-blue-500 focus-within:ring-1 bg-gray-200",
           error && "ring-red-600 ring-1",
           required && "field-required",
           containerClassName,
@@ -34,7 +34,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           required={required}
           className={[
-            "w-full pb-3 px-3 pt-2 h-10 placeholder-gray-500 bg-inherit focus:outline-none",
+            "w-full py-2.5 px-3 placeholder-gray-500 bg-inherit focus:outline-none",
             className,
           ].join(" ")}
           {...props}
