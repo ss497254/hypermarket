@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  font-size: 2.8rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+}
+
+@layer utilities {
+  .flex-c {
+    @apply flex flex-col;
+  }
+
+  .f {
+    @apply flex;
+  }
+
+  .c {
+    @apply flex justify-center items-center;
+  }
+}
+
+::-webkit-resizer {
+  @apply bg-gray-100;
+}
+
+.h-screen-reduction {
+  height: calc(100vh - 56px);
+}
+
+button:focus {
+  @apply ring-2;
+  outline: none;
+}
+
+@keyframes shake {
+  0% {
+    margin-left: 0px;
+  }
+  25% {
+    margin-left: 6px;
+  }
+  50% {
+    margin-left: 0px;
+  }
+  75% {
+    margin-left: -6px;
+  }
+  100% {
+    margin-left: 0px;
+  }
+}
+
+.shake {
+  animation: shake 0.2s ease-in-out 0s 1;
+}
+
+.field-required > label:after {
+  content: '*';
+  margin-left: 2px;
+  margin-top: -2px;
+  @apply text-red-500;
+}

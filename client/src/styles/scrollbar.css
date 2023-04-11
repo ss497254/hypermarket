@@ -1,0 +1,29 @@
+::-webkit-scrollbar {
+  @apply w-1 lg:w-2;
+}
+
+.remove-scroll::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+}
+
+.scroll-thin::-webkit-scrollbar {
+  @apply w-1;
+}
+
+.hide-scroll::-webkit-scrollbar-thumb {
+  @apply bg-transparent;
+}
+
+.hide-scroll:hover::-webkit-scrollbar-thumb {
+  @apply bg-dark-600;
+}
+
+::-webkit-scrollbar-track {
+  display: initial;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300;
+  border-radius: 5px;
+}

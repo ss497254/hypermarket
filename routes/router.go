@@ -33,17 +33,12 @@ func Initalize(app *fiber.App) {
 		devRouts.Post("/query", RunQuery)
 	}
 
-	app.Use("/admin", filesystem.New(filesystem.Config{
-		Root:         http.FS(client.AdminWebsiteSource),
-		PathPrefix:   "apps/admin/out",
-		NotFoundFile: "apps/admin/out/404.html",
-		Browse:       true,
-	}))
+	apiRoute.Use(middleware.NotFound)
 
 	app.Use("/", filesystem.New(filesystem.Config{
 		Root:         http.FS(client.WebsiteSource),
-		PathPrefix:   "apps/web/out",
-		NotFoundFile: "apps/web/out/404.html",
+		PathPrefix:   "dist",
+		NotFoundFile: "dist/index.html",
 		Browse:       true,
 	}))
 }

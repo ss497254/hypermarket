@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "target": "esnext",
+    "experimentalDecorators": true,
+    "noEmitOnError": false,
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "strict": true,
+    "lib": ["ESNext", "DOM"],
+    "module": "esnext",
+    "esModuleInterop": true,
+    "preserveSymlinks": true,
+    "typeRoots": ["./node_modules/@types"],
+    "downlevelIteration": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "incremental": true,
+    "moduleResolution": "node",
+    "jsx": "preserve"
+  },
+  "include": ["vite-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+  "exclude": ["node_modules"]
+}

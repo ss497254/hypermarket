@@ -1,0 +1,125 @@
+.toast-container {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  --width: min(480px, 90vw);
+  --height: 4rem;
+  --gap: 1rem;
+  --duration: 400ms;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.toast {
+  display: flex;
+  transform: translateY(var(--y)) scale(var(--scale));
+  transform-origin: center;
+  transition: all var(--duration) ease-in-out;
+  pointer-events: auto;
+}
+
+.toast-container:hover .toast {
+  transform: translateY(0) scale(1);
+}
+
+.toast-inner {
+  @apply bg-gray-50 border border-gray-300;
+  width: var(--width);
+  height: var(--height);
+  margin-bottom: var(--gap);
+  opacity: var(--opacity);
+  -webkit-backdrop-filter: blur(0.5rem);
+  backdrop-filter: blur(0.5rem);
+  padding-left: 12px;
+  padding-right: 20px;
+  border-radius: 6px;
+  transition: all var(--duration) ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+.toast-container:hover .toast .toast-inner {
+  opacity: 1;
+  height: auto;
+  min-height: var(--height);
+}
+
+.toast-container:hover .toast.exit-active {
+  transform: translateY(0) scale(0.5);
+}
+
+.toast-container:hover .toast.exit-active .toast-inner {
+  background-color: var(--color-dark-800) !important;
+}
+
+.toast.enter {
+  transform: translateY(100%) scale(1);
+  margin-bottom: calc((var(--height) + var(--gap)) * -1);
+}
+.toast.enter-active {
+  transform: translateY(var(--y)) scale(var(--scale));
+  margin-bottom: 0;
+}
+/* 
+.toast-content {
+  background-color: red;
+} */
+
+.toast-content h4 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0.2rem 0;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.toast-content p {
+  display: none;
+  font-size: 0.8rem;
+}
+.toast-container:hover .toast-content p {
+  display: block;
+}
+
+.toast.exit-active {
+  transform: translateY(calc(var(--y) - 10%)) scale(calc(var(--scale) - 0.1));
+  margin-bottom: calc((var(--height) + var(--gap)) * -1);
+}
+
+.toast.exit-active .toast-inner {
+  opacity: 0;
+}
+
+.toast-inner .icon {
+  @apply text-white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 38px;
+  width: 38px;
+  border-radius: 6px;
+  margin-right: 12px;
+}
+
+.toast-inner .icon.error {
+  background-color: #ff3c3c;
+}
+.toast-inner .icon.success {
+  background-color: #22c55e;
+}
+.toast-inner .icon.info {
+  background-color: #0372fa;
+}
+.toast-inner .icon.warning {
+  background-color: #f59e0b;
+}
+
+.toast-inner .close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 0.8rem;
+  padding: 0.3rem;
+  display: flex;
+}
