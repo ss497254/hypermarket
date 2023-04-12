@@ -13,14 +13,15 @@ import (
 func Initalize(app *fiber.App) {
 	apiRoutes := app.Group("/api")
 
-	apiRoutes.Post("/login", StaffLogin)
-	apiRoutes.Get("/me", middleware.IsStaff, GetStaff)
-
 	apiRoutes.Get("/products", middleware.IsAuth, GetProducts)
 	apiRoutes.Post("/products", middleware.IsAuth, CreateProduct)
 	apiRoutes.Get("/products/:id", middleware.IsAuth, GetProductsById)
 	apiRoutes.Put("/products/:id", middleware.IsAuth, UpdateProductsById)
 	apiRoutes.Delete("/products/:id", middleware.IsAuth, DeleteProductsById)
+
+	staffRoutes := apiRoutes.Group("/staff")
+	staffRoutes.Post("/login", StaffLogin)
+	staffRoutes.Get("/me", middleware.IsStaff, GetStaff)
 
 	adminRoutes := apiRoutes.Group("/admin")
 	adminRoutes.Post("/login", AdminLogin)

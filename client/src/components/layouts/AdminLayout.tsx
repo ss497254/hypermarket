@@ -60,7 +60,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   }, []);
 
   if (error) {
-    Router.push("/login");
+    Router.push("/admin/login");
   }
 
   if (!admin?.username) return <LogoLoading />;

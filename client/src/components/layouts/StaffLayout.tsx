@@ -1,41 +1,71 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import { useStaffStore } from "src/global-stores/useStaffStore";
+import { useGet } from "src/hooks/ApiHooks";
+import { ChartBar, Home, OutlineGlobe, Settings, User } from "src/icons";
+import Router from "next/router";
+import { StaffType } from "src/types/StaffType";
 import { NavBar } from "../../ui/Navbar";
 import { Sidebar } from "../../ui/Sidebar";
-import { Home, Notification } from "src/icons";
-import { wrappedGet } from "src/utils/wrappedGet";
-import { useStaffStore } from "src/global-stores/useStaffStore";
-
-interface props {
-  children: React.ReactNode;
-}
+import { LogoLoading } from "src/ui/LogoLoading";
 
 const navGroups = [
   {
     heading: "Main",
     items: [
-      { href: "/", icon: <Home size={18} />, title: "Home" },
+      { href: "/staff", icon: <Home size={18} />, title: "Home" },
       {
-        href: "/notifications",
-        icon: <Notification />,
-        title: "Notifications",
+        href: "/staff/orders",
+        icon: <ChartBar />,
+        title: "Orders",
+      },
+    ],
+  },
+  {
+    heading: "Manage",
+    items: [
+      {
+        href: "/staff/products",
+        icon: <OutlineGlobe />,
+        title: "Products",
+      },
+    ],
+  },
+  {
+    heading: "Account",
+    items: [
+      {
+        href: "/staff/settings",
+        icon: <Settings size={18} />,
+        title: "Settings",
       },
     ],
   },
 ];
 
-const resource = wrappedGet("/api/staff/me");
+export interface StaffLayoutProps {
+  children: React.ReactNode;
+}
 
-export const StaffLayout: React.FC<props> = ({ children }) => {
-  const res = resource.read();
-
-  const { setStaff } = useStaffStore();
+const StaffLayout: React.FC<StaffLayoutProps> = ({ children }) => {
+  const { run, error } = useGet<{ data: StaffType }>("/api/staff/me");
+  const { staff, setStaff } = useStaffStore();
 
   useEffect(() => {
-    if (res?.data?.username) setStaff(res.data);
+    run().then((res) => {
+      if (res?.data.username) {
+        setStaff(res.data);
+      }
+    });
   }, []);
 
+  if (error) {
+    Router.push("/staff/login");
+  }
+
+  if (!staff?.username) return <LogoLoading />;
+
   return (
-    <main className="flex-c min-h-screen pt-14 selection:bg-emerald-700 selection:text-sky-50 lg:pl-[280px]">
+    <main className="flex-c min-h-screen bg-indigo-300 lg:ml-[280px]">
       <NavBar />
       {children}
       <Sidebar navGroups={navGroups} />
@@ -43,10 +73,4 @@ export const StaffLayout: React.FC<props> = ({ children }) => {
   );
 };
 
-export default function withStaffLayout(Page: () => JSX.Element) {
-  return () => (
-    <StaffLayout>
-      <Page />
-    </StaffLayout>
-  );
-}
+export default StaffLayout;

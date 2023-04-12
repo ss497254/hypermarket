@@ -1,19 +1,28 @@
 import { useForm } from "react-hook-form";
+import Router from "next/router";
+import { useAdminStore } from "src/global-stores/useAdminStore";
 import { usePost } from "src/hooks/ApiHooks";
+import { showToast } from "src/lib/showToast";
 import { Button } from "src/ui/Button";
 import { Input } from "src/ui/Input";
 
 const Login = () => {
-  const { run, loading, error } = usePost("/api/login");
-  const { register, handleSubmit, reset } = useForm();
+  const { run, loading, error } = usePost("/api/staff/login");
+  const { register, handleSubmit, getValues } = useForm();
+  const { setAdmin } = useAdminStore();
 
   return (
     <div className="relative flex items-center justify-center min-h-screen bg-indigo-300">
       <form
         className="p-6 lg:p-8 lg:w-[480px] w-[400px] bg-white dark:bg-slate-800 rounded-lg mx-4"
-        onSubmit={handleSubmit((data: any) => {
-          run(data);
-          reset();
+        onSubmit={handleSubmit(async (data: any) => {
+          const res = await run(data);
+          if (res.success) {
+            setAdmin({ username: getValues("username") });
+            return Router.replace("/staff");
+          }
+
+          showToast({ message: "Unable to login" }, "error");
         })}
       >
         <h4 className="md:text-3xl">Login to your account</h4>

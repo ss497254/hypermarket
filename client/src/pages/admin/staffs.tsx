@@ -27,7 +27,7 @@ const Staffs: NextPageWithLayout = () => {
 
   return (
     <div className="max-w-5xl m-4 md:m-8">
-      <div className="justify-between mt-8 mb-4 md:col-span-2 f">
+      <div className="justify-between my-6 md:col-span-2 f">
         <h4>Staffs</h4>
         <AddStaffButton onSave={onSave} />
       </div>

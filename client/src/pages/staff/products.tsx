@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { AddProductButton } from "src/components/AddProductButton";
-import AdminLayout from "src/components/layouts/AdminLayout";
+import StaffLayout from "src/components/layouts/StaffLayout";
 import { useGet } from "src/hooks/ApiHooks";
 import { useForceRender } from "src/hooks/useForceRender";
 import { NextPageWithLayout } from "src/types/NextPageWithLayout";
@@ -27,7 +27,7 @@ const Products: NextPageWithLayout = () => {
 
   return (
     <div className="max-w-5xl m-4 md:m-8">
-      <div className="justify-between my-6 md:col-span-2 f">
+      <div className="justify-between mt-8 mb-4 md:col-span-2 f">
         <h4>Products</h4>
         <AddProductButton onSave={onSave} />
       </div>
@@ -37,7 +37,7 @@ const Products: NextPageWithLayout = () => {
 };
 
 Products.getLayout = (page: React.ReactNode) => (
-  <AdminLayout>{page}</AdminLayout>
+  <StaffLayout>{page}</StaffLayout>
 );
 
 export default Products;
