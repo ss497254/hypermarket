@@ -33,7 +33,7 @@ func start(cmd *cobra.Command, args []string) {
 	utils.SetupAdminAccount()
 
 	app := fiber.New(fiber.Config{
-		AppName: "Supermarket automation system",
+		AppName: "Hypermarket (Supermarket automation system)",
 	})
 
 	app.Use(recover.New(recover.Config{

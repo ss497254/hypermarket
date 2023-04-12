@@ -3,6 +3,7 @@ package cmd
 import (
 	"hypermarket/config"
 
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -13,5 +14,6 @@ var generateConfigCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		configFilePath := cmd.Flag("config").Value.String()
 		config.GenerateDemoConfig(configFilePath)
+		color.Green("config.json file generated successfully.")
 	},
 }
