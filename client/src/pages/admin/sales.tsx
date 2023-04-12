@@ -1,9 +1,25 @@
+import { useEffect } from "react";
 import AdminLayout from "src/components/layouts/AdminLayout";
+import { useGet } from "src/hooks/ApiHooks";
+import { OrderType } from "src/types/OrderType";
+import { OrderTable } from "src/ui/OrderTable";
 
+let orders: OrderType[] = [];
 const Sales = () => {
+  const { run, loading, error } = useGet<{ data: OrderType[] }>(
+    "/api/admin/orders",
+  );
+
+  useEffect(() => {
+    run().then((res) => res && (orders = res.data));
+  }, []);
+
   return (
-    <div className="relative flex items-center justify-center min-h-screen bg-indigo-300">
-      sales
+    <div className="max-w-5xl m-4 md:m-8">
+      <div className="justify-between my-6 md:col-span-2 f">
+        <h4>Sales</h4>
+      </div>
+      <OrderTable orders={orders} error={error} loading={loading} />
     </div>
   );
 };

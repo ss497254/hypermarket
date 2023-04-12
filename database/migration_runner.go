@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"hypermarket/migrations"
+	"os"
 	"sort"
 	"strings"
 
@@ -51,7 +52,8 @@ func RunMigrations() error {
 
 		ctx := context.Background()
 		if err := ExecTrans(ctx, string(mBytes)+recordStmt); err != nil {
-			return err
+			color.Red(err.Error())
+			os.Exit(1)
 		}
 
 	}

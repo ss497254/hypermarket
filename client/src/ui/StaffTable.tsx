@@ -9,6 +9,8 @@ interface StaffTableProps {
 }
 
 export const StaffTable: React.FC<StaffTableProps> = ({ staffs, loading }) => {
+  const noRecords = staffs.length === 0;
+
   return (
     <div className="w-full overflow-x-scroll rounded-md shadow remove-scroll">
       <table className="w-full border border-collapse border-black table-auto">
@@ -23,9 +25,15 @@ export const StaffTable: React.FC<StaffTableProps> = ({ staffs, loading }) => {
         </thead>
         <tbody>
           {loading ? (
-            <tr className="border-red-100 outline-none">
-              <td colSpan={6} className="h-64 bg-white">
+            <tr>
+              <td colSpan={6} className="h-64 bg-white border">
                 <Spinner size={32} className="mx-auto" />
+              </td>
+            </tr>
+          ) : noRecords ? (
+            <tr>
+              <td colSpan={6} className="h-64 text-center bg-white border">
+                <h4>No staffs found.</h4>
               </td>
             </tr>
           ) : (

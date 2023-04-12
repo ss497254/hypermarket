@@ -35,7 +35,7 @@ func GetOrders() (*[]entities.Order, error) {
 }
 
 func GetOrderById(id int) (*entities.Order, error) {
-	row := database.QueryRow("Select * from orders where id=$1", id)
+	row := database.QueryRow("select * from orders where id=$1", id)
 
 	var order = entities.Order{}
 
@@ -48,7 +48,7 @@ func GetOrderById(id int) (*entities.Order, error) {
 }
 
 func GetOrdersByStaffUsername(staff_username string) (*entities.Order, error) {
-	row := database.QueryRow("Select * from orders where staff_username=$1", staff_username)
+	row := database.QueryRow("select * from orders where staff_username=$1", staff_username)
 
 	var order = entities.Order{}
 

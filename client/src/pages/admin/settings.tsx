@@ -1,9 +1,10 @@
 import AdminLayout from "src/components/layouts/AdminLayout";
+import { LogoutCard } from "src/ui/LogoutCard";
 
 const Settings = () => {
   return (
-    <div className="relative flex items-center justify-center min-h-screen bg-indigo-300">
-      settings
+    <div className="max-w-5xl min-h-screen m-4 md:m-8">
+      <LogoutCard path="/api/admin/logout" />
     </div>
   );
 };
