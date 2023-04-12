@@ -1,4 +1,5 @@
 export { default as BotIcon } from "./BotIcon";
+export { default as ChartBar } from "./ChartBar";
 export { default as CloseIcon } from "./CloseIcon";
 export { default as DeveloperIcon } from "./DeveloperIcon";
 export { default as Hamburger } from "./Hamburger";

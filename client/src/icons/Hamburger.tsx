@@ -8,14 +8,14 @@ export default function Hamburger(
       width={props.size || 16}
       height={props.size || 16}
       {...props}
-      viewBox="0 0 24 24"
+      viewBox="0 0 32 24"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
     >
       <line
         x1="0"
-        x2="24"
+        x2="32"
         y1="2"
         y2="2"
         id="Path"
@@ -25,7 +25,7 @@ export default function Hamburger(
       ></line>
       <line
         x1="0"
-        x2="24"
+        x2="32"
         y1="12"
         y2="12"
         id="Path"
@@ -35,7 +35,7 @@ export default function Hamburger(
       ></line>
       <line
         x1="0"
-        x2="24"
+        x2="32"
         y1="22"
         y2="22"
         id="Path"

@@ -18,8 +18,13 @@ const Login = lazy(() => import("src/pages/login"));
 const Home = lazy(() => import("src/pages/index"));
 const Notifications = lazy(() => import("src/pages/notifications"));
 
-const AdminHome = lazy(() => import("src/pages/admin/index"));
 const AdminLogin = lazy(() => import("src/pages/admin/login"));
+const AdminLayout = lazy(() => import("src/components/layouts/AdminLayout"));
+const AdminHome = lazy(() => import("src/pages/admin/index"));
+const AdminSales = lazy(() => import("src/pages/admin/sales"));
+const AdminProducts = lazy(() => import("src/pages/admin/products"));
+const AdminStaffs = lazy(() => import("src/pages/admin/staffs"));
+const AdminSettings = lazy(() => import("src/pages/admin/settings"));
 
 const Error404 = lazy(() => import("src/pages/error404"));
 
@@ -31,7 +36,14 @@ const App = () => {
       <Suspense fallback={<LogoLoading />}>
         <Routes>
           <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin" element={<AdminHome />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="/admin" element={<AdminHome />} />
+            <Route path="/admin/sales" element={<AdminSales />} />
+            <Route path="/admin/products" element={<AdminProducts />} />
+            <Route path="/admin/staffs" element={<AdminStaffs />} />
+            <Route path="/admin/settings" element={<AdminSettings />} />
+          </Route>
+
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />} />

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { useSidebarDrawerStore } from "src/global-stores/useSidebarDrawerStore";
 import { useWindowSizeStore } from "src/global-stores/useWindowSizeStore";
 import { Drawer } from "src/ui/Drawer";
@@ -19,17 +20,18 @@ interface props {
 export const Sidebar: React.FC<props> = ({ navGroups }) => {
   const value = useSidebarDrawerStore();
   const { width } = useWindowSizeStore();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (value.open) {
       value.toggleOpen();
     }
-  }, [window.location.href]);
+  }, [pathname]);
 
   return (
     <Drawer
       {...value}
-      className="hide-scroll overflow-y-scroll text-white pb-10"
+      className="pb-10 overflow-y-scroll text-white hide-scroll"
       permanent={width > 1024}
     >
       <Logo className="mx-auto my-8 bg-white rounded-full" size={128} />

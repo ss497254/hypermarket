@@ -1,13 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
 import { useAdminStore } from "src/global-stores/useAdminStore";
-import { Home, Notification, OutlineGlobe, Settings, User } from "src/icons";
+import { ChartBar, Home, OutlineGlobe, Settings, User } from "src/icons";
 import { wrappedGet } from "src/utils/wrappedGet";
 import { NavBar } from "../../ui/Navbar";
 import { Sidebar } from "../../ui/Sidebar";
-
-interface props {
-  children: React.ReactNode;
-}
 
 const navGroups = [
   {
@@ -15,9 +12,9 @@ const navGroups = [
     items: [
       { href: "/admin", icon: <Home size={18} />, title: "Home" },
       {
-        href: "/notifications",
-        icon: <Notification />,
-        title: "Notifications",
+        href: "/admin/sales",
+        icon: <ChartBar />,
+        title: "Sales",
       },
     ],
   },
@@ -29,7 +26,7 @@ const navGroups = [
         icon: <OutlineGlobe />,
         title: "Products",
       },
-      { href: "/admin/staff", icon: <User />, title: "Staff" },
+      { href: "/admin/staffs", icon: <User />, title: "Staffs" },
     ],
   },
   {
@@ -46,7 +43,7 @@ const navGroups = [
 
 const resource = wrappedGet("/api/admin/me");
 
-export const AdminLayout: React.FC<props> = ({ children }) => {
+const AdminLayout = () => {
   const res = resource.read();
 
   const { setAdmin } = useAdminStore();
@@ -58,16 +55,10 @@ export const AdminLayout: React.FC<props> = ({ children }) => {
   return (
     <main className="flex-c min-h-screen pt-14 selection:bg-emerald-700 selection:text-sky-50 lg:pl-[280px]">
       <NavBar />
-      {children}
+      <Outlet />
       <Sidebar navGroups={navGroups} />
     </main>
   );
 };
 
-export default function withAdminLayout(Page: () => JSX.Element) {
-  return () => (
-    <AdminLayout>
-      <Page />
-    </AdminLayout>
-  );
-}
+export default AdminLayout;
