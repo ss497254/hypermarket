@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"sas/entities"
-	"sas/lib"
-	"sas/services"
+	"hypermarket/entities"
+	"hypermarket/lib"
+	"hypermarket/services"
 
 	"github.com/fatih/color"
 	"github.com/gofiber/fiber/v2"

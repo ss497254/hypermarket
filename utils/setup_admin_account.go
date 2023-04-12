@@ -1,9 +1,9 @@
 package utils
 
 import (
-	"sas/config"
-	"sas/entities"
-	"sas/services"
+	"hypermarket/config"
+	"hypermarket/entities"
+	"hypermarket/services"
 
 	"github.com/fatih/color"
 )

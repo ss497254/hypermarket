@@ -1,8 +1,8 @@
 package daos
 
 import (
-	"sas/database"
-	"sas/entities"
+	"hypermarket/database"
+	"hypermarket/entities"
 )
 
 func CreateProduct(product *entities.Product) error {

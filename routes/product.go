@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"sas/entities"
-	"sas/services"
+	"hypermarket/entities"
+	"hypermarket/services"
 
 	"github.com/gofiber/fiber/v2"
 )

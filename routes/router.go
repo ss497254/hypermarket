@@ -1,10 +1,10 @@
 package routes
 
 import (
+	"hypermarket/client"
+	"hypermarket/middleware"
+	"hypermarket/utils"
 	"net/http"
-	"sas/client"
-	"sas/middleware"
-	"sas/utils"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/filesystem"

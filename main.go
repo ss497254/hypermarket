@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
+	"hypermarket/cmd"
+	"hypermarket/config"
+	"hypermarket/database"
+	"hypermarket/middleware"
+	"hypermarket/routes"
+	"hypermarket/utils"
 	"log"
 	"os"
 	"os/signal"
-	"sas/cmd"
-	"sas/config"
-	"sas/database"
-	"sas/middleware"
-	"sas/routes"
-	"sas/utils"
 
 	"github.com/fatih/color"
 	"github.com/gofiber/fiber/v2"

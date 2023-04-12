@@ -11,5 +11,4 @@ export const debounced = (fn: () => void, delay: number) => {
 export const randomNumberFromRange = (max: number, min = 0) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
-export const generateId = () =>
-  Math.ceil(Math.random() * Math.random() * Math.random() * 1000 * 1000 * 1000);
+export const generateId = () => Math.ceil(Math.random() * 1000000);

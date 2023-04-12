@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"sas/config"
+	"hypermarket/config"
 
 	"github.com/spf13/cobra"
 )

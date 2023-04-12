@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"sas/services"
+	"hypermarket/services"
 
 	"github.com/gofiber/fiber/v2"
 )

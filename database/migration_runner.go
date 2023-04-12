@@ -3,7 +3,7 @@ package database
 import (
 	"context"
 	"fmt"
-	"sas/migrations"
+	"hypermarket/migrations"
 	"sort"
 	"strings"
 

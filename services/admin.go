@@ -1,8 +1,8 @@
 package services
 
 import (
-	"sas/daos"
-	"sas/entities"
+	"hypermarket/daos"
+	"hypermarket/entities"
 )
 
 func GetAdminByUsername(username string) (*entities.Admin, error) {

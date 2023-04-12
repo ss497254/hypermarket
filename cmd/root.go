@@ -10,7 +10,7 @@ var rootCmd *cobra.Command
 
 func Init(start func(cmd *cobra.Command, args []string)) {
 	rootCmd = &cobra.Command{
-		Use:   "sas",
+		Use:   "hypermarket",
 		Short: "Sas is supermarket automation system",
 		Long:  `Sas will help to manage and automate your supermarket.`,
 		Run:   start,

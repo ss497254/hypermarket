@@ -2,9 +2,9 @@ package services
 
 import (
 	"fmt"
-	"sas/daos"
-	"sas/entities"
-	"sas/lib"
+	"hypermarket/daos"
+	"hypermarket/entities"
+	"hypermarket/lib"
 )
 
 func StaffLogin(username string, password string) error {

@@ -1,4 +1,4 @@
-module sas
+module hypermarket
 
 go 1.19
 

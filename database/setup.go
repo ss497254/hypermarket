@@ -2,8 +2,8 @@ package database
 
 import (
 	"context"
+	"hypermarket/config"
 	"log"
-	"sas/config"
 	"sync"
 
 	_ "modernc.org/sqlite"

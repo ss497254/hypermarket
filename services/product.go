@@ -1,8 +1,8 @@
 package services
 
 import (
-	"sas/daos"
-	"sas/entities"
+	"hypermarket/daos"
+	"hypermarket/entities"
 )
 
 func CreateProduct(product *entities.Product) error {

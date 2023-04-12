@@ -2,7 +2,7 @@ package lib
 
 import (
 	"encoding/json"
-	"sas/config"
+	"hypermarket/config"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v5"

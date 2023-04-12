@@ -1,8 +1,8 @@
 package middleware
 
 import (
-	"sas/config"
-	"sas/lib"
+	"hypermarket/config"
+	"hypermarket/lib"
 
 	"github.com/gofiber/fiber/v2"
 )
