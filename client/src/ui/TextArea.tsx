@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import React, { forwardRef, useMemo } from "react";
 import { generateId } from "src/utils/lodash";
 
@@ -19,13 +18,16 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     return (
       <div
         className={[
-          "overflow-hidden text-sm rounded focus-within:ring-1 bg-dark-600",
+          "overflow-hidden text-sm rounded ring-blue-500 focus-within:ring-1 bg-gray-200",
           error && "ring-red-600 ring-1",
           required && "field-required",
           containerClassName,
         ].join(" ")}
       >
-        <label htmlFor={id} className="block px-3 pb-1 pt-2 text-dark-200">
+        <label
+          htmlFor={id}
+          className="block px-3 pt-2 font-medium text-gray-900"
+        >
           {label}
         </label>
         <textarea
@@ -33,12 +35,11 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           ref={ref}
           required={required}
           className={[
-            "w-full pb-3 px-3 placeholder-dark-300 resize-y bg-inherit focus:outline-none",
+            "w-full py-2.5 px-3 placeholder-gray-500 bg-inherit focus:outline-none",
             className,
           ].join(" ")}
           {...props}
         ></textarea>
-        <p className="-my-1 text-xs text-red-300">{error}</p>
       </div>
     );
   },

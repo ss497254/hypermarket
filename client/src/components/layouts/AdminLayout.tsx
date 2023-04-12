@@ -53,7 +53,7 @@ const AdminLayout = () => {
   }, []);
 
   return (
-    <main className="flex-c min-h-screen pt-14 selection:bg-emerald-700 selection:text-sky-50 lg:pl-[280px]">
+    <main className="flex-c min-h-screen pt-14 lg:pl-[280px]">
       <NavBar />
       <Outlet />
       <Sidebar navGroups={navGroups} />

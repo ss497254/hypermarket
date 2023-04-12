@@ -18,18 +18,18 @@ export const StyledModal: React.FC<props> = ({
 }) => {
   return (
     <Modal open={open} setOpen={setOpen}>
-      <div className="border-500 mb-4 rounded-lg bg-dark-800 lg:mb-6">
+      <div className="mb-4 bg-white border border-gray-300 rounded-lg border-500 lg:mb-6">
         <h4 className="p-5 text-2xl font-bold md:px-7">{heading}</h4>
         <div
           className={[
-            "p-5 overflow-y-scroll max-h-[60vh] text-base md:p-8 border-y border-dark-500",
+            "p-5 overflow-y-scroll max-h-[60vh] text-base md:p-8 border-y border-gray-200",
             className,
           ].join(" ")}
           {...props}
         >
           {children}
         </div>
-        <div className="flex justify-end rounded-b-lg bg-dark-700 p-4">
+        <div className="flex justify-end p-4 bg-gray-100 rounded-b-lg">
           {footer}
         </div>
       </div>

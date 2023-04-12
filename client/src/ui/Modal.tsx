@@ -14,18 +14,18 @@ export const Modal: React.FC<ModalProps> = ({
   ...props
 }) => {
   if (!open) {
-    document.body.classList.remove("fixed");
+    document.body.classList.remove("modal-body-fixed");
     return null;
   }
 
-  document.body.classList.add("fixed");
+  document.body.classList.add("modal-body-fixed");
 
   return createPortal(
     <div
       onClick={(e) => {
         !e.defaultPrevented && setOpen(false);
       }}
-      className="c fixed inset-0 z-50 flex-col text-white backdrop-blur-sm duration-500"
+      className="fixed inset-0 z-50 flex-col duration-500 c backdrop-blur-sm"
     >
       <div {...props} onClick={(e) => e.preventDefault()}>
         {children}

@@ -74,8 +74,14 @@ button:focus {
   animation: shake 0.2s ease-in-out 0s 1;
 }
 
+.modal-body-fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+}
+
 .field-required > label:after {
-  content: '*';
+  content: "*";
   margin-left: 2px;
   margin-top: -2px;
   @apply text-red-500;
