@@ -27,7 +27,7 @@
 }
 
 .hide-scroll:hover::-webkit-scrollbar-thumb {
-  @apply bg-dark-600;
+  @apply bg-gray-500;
 }
 
 ::-webkit-scrollbar-track {

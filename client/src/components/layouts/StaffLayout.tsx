@@ -68,7 +68,10 @@ const StaffLayout: React.FC<StaffLayoutProps> = ({ children }) => {
     <main className="flex-c min-h-screen bg-indigo-300 lg:ml-[280px]">
       <NavBar />
       {children}
-      <Sidebar navGroups={navGroups} />
+      <Sidebar
+        data={{ username: staff.username, role: "staff" }}
+        navGroups={navGroups}
+      />
     </main>
   );
 };

@@ -17,15 +17,16 @@ const Login = () => {
         className="p-6 lg:p-8 lg:w-[480px] w-[400px] bg-white dark:bg-slate-800 rounded-lg mx-4"
         onSubmit={handleSubmit(async (data: any) => {
           const res = await run(data);
-          if (res.success) {
+          if (res && res.success) {
             setAdmin({ username: getValues("username") });
+            showToast({ message: "Login successful." }, "success");
             return Router.replace("/admin");
           }
 
           showToast({ message: "Unable to login" }, "error");
         })}
       >
-        <h4 className="md:text-3xl">Login to your account</h4>
+        <h4 className="md:text-3xl">Login to your admin account</h4>
         <div className="my-6 space-y-4">
           <Input
             label="Username"
@@ -43,7 +44,12 @@ const Login = () => {
             {...register("password", { required: true })}
           />
         </div>
-        <Button className="w-full" loading={loading} size="large" type="submit">
+        <Button
+          className="w-full font-semibold"
+          loading={loading}
+          size="xl"
+          type="submit"
+        >
           Submit
         </Button>
       </form>

@@ -30,7 +30,7 @@ const Error404 = () => {
           <p>We couldn't find the page that you're looking for!</p>
         </div>
         <Link href="/">
-          <Button className="font-semibold" size="medium">
+          <Button className="font-semibold" size="md">
             Go Home
           </Button>
         </Link>

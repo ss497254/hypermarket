@@ -51,7 +51,7 @@ export const useGet = <T>(path: string, options?: QueryOptions<T>) => {
       setError(true);
       return options?.initialValue;
     },
-    [options?.initialValue, path],
+    [path],
   );
 
   return { loading, error, run };

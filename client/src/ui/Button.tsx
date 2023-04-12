@@ -2,11 +2,11 @@ import React from "react";
 import { Spinner } from "./Spinner";
 
 const BtnSizes = {
-  tiny: "text-xs px-2.5 py-1",
-  small: "text-sm leading-4 px-3 py-2",
-  medium: "text-sm px-5 py-2",
-  large: "text-base px-6 py-2",
-  xlarge: "text-base px-7 py-3",
+  xs: "text-xs px-2.5 py-1",
+  sm: "text-sm leading-4 px-3 py-2",
+  md: "text-sm px-5 py-2",
+  lg: "text-base px-6 py-2",
+  xl: "text-base px-7 py-3",
 };
 
 const ButtonType = {
@@ -34,7 +34,7 @@ export const Button: React.FC<ButtonProps> = ({
   loading,
   btn = "default",
   icon,
-  size = "medium",
+  size = "md",
   disabled,
   iconSize,
   children,
