@@ -1,9 +1,9 @@
 import React from "react";
-import Helmet from "react-helmet";
+import NextHead from "next/head";
 
 export const Head = () => {
   return (
-    <Helmet>
+    <NextHead>
       <title>SAS</title>
       <link rel="icon" href="/favicon.ico" type="image/x-icon" />
       <link rel="manifest" href="/manifest.json" />
@@ -26,6 +26,6 @@ export const Head = () => {
         sizes="16x16"
         href="/favicon-16x16.png"
       ></link>
-    </Helmet>
+    </NextHead>
   );
 };

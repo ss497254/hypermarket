@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useRouter } from "next/router";
 import { useSidebarDrawerStore } from "src/global-stores/useSidebarDrawerStore";
 import { useWindowSizeStore } from "src/global-stores/useWindowSizeStore";
 import { Drawer } from "src/ui/Drawer";
@@ -20,7 +20,7 @@ interface props {
 export const Sidebar: React.FC<props> = ({ navGroups }) => {
   const value = useSidebarDrawerStore();
   const { width } = useWindowSizeStore();
-  const { pathname } = useLocation();
+  const { pathname } = useRouter();
 
   useEffect(() => {
     if (value.open) {

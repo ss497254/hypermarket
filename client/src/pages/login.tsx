@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { usePost } from "src/hooks/ApiHooks";
 import { Button } from "src/ui/Button";
 import { Input } from "src/ui/Input";
@@ -9,7 +8,7 @@ const Login = () => {
   const { register, handleSubmit, reset } = useForm();
 
   return (
-    <div className="min-h-screen bg-indigo-300 flex items-center justify-center relative">
+    <div className="relative flex items-center justify-center min-h-screen bg-indigo-300">
       <form
         className="p-6 lg:p-8 lg:w-[480px] w-[400px] bg-white dark:bg-slate-800 rounded-lg mx-4"
         onSubmit={handleSubmit((data: any) => {
@@ -18,7 +17,7 @@ const Login = () => {
         })}
       >
         <h4 className="md:text-3xl">Login to your account</h4>
-        <div className="space-y-4 my-6">
+        <div className="my-6 space-y-4">
           <Input
             label="Username"
             placeholder="Your Username"

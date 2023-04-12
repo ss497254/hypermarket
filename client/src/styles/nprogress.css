@@ -6,7 +6,7 @@
 }
 
 #nprogress .bar {
-  @apply bg-emerald-500;
+  @apply bg-blue-500;
 
   position: fixed;
   z-index: 100;
@@ -45,7 +45,7 @@
   border: solid 2px transparent;
   border-radius: 50%;
 
-  @apply h-6 w-6 border-t-emerald-500 border-l-emerald-500;
+  @apply h-6 w-6 border-t-blue-500 border-l-blue-500;
 
   -webkit-animation: nprogress-spinner 500ms linear infinite;
   animation: nprogress-spinner 500ms linear infinite;

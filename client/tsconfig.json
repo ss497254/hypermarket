@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "target": "esnext",
+    "sourceMap": true,
+    "target": "es6",
     "experimentalDecorators": true,
     "noEmitOnError": false,
     "resolveJsonModule": true,
@@ -23,6 +23,6 @@
     "moduleResolution": "node",
     "jsx": "preserve"
   },
-  "include": ["vite-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
   "exclude": ["node_modules"]
 }

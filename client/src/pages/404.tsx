@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "src/ui/Button";
 
@@ -12,7 +12,7 @@ const Error404 = () => {
   }, []);
 
   return (
-    <div className="relative flex h-screen w-full flex-col items-center justify-center bg-gray-100">
+    <div className="relative flex flex-col items-center justify-center w-full h-screen bg-gray-100">
       <div
         className={`select-none opacity-10 text-gray-900 transition duration-200${
           show404 ? "blur-sm" : "blur-none"
@@ -29,7 +29,7 @@ const Error404 = () => {
           <h3 className="text-2xl text-blue-500">Looking for something? 🔍</h3>
           <p>We couldn't find the page that you're looking for!</p>
         </div>
-        <Link to="/">
+        <Link href="/">
           <Button className="font-semibold" size="medium">
             Go Home
           </Button>

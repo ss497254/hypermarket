@@ -1,4 +1,5 @@
 import { CreateProductButton } from "src/components/CreateProductButton";
+import AdminLayout from "src/components/layouts/AdminLayout";
 import { useForceRender } from "src/hooks/useForceRender";
 import { ProductType } from "src/types/ProductType";
 
@@ -27,5 +28,9 @@ const Products = () => {
     </div>
   );
 };
+
+Products.getLayout = (page: React.ReactNode) => (
+  <AdminLayout>{page}</AdminLayout>
+);
 
 export default Products;

@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useRouter } from "next/router";
 import { NavItem, NavItemProps } from "./NavItem";
 
 interface props {
@@ -8,7 +8,8 @@ interface props {
 }
 
 export const NavItemGroup: React.FC<props> = ({ heading, items }) => {
-  const { pathname } = useLocation();
+  const { pathname } = useRouter();
+
   return (
     <div className="mx-4 mb-4">
       <div className="mx-4 mb-2 text-xs font-semibold text-gray-400 uppercase">

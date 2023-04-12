@@ -1,5 +1,7 @@
 import React from "react";
 
-export const Profile = () => {
-  return <div className="c grow bg-dark-900 text-2xl font-bold">Profile</div>;
+const Profile = () => {
+  return <div className="text-2xl font-bold c grow bg-dark-900">Profile</div>;
 };
+
+export default Profile;

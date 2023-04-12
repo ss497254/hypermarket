@@ -1,3 +1,4 @@
+import AdminLayout from "src/components/layouts/AdminLayout";
 import { useAdminStore } from "src/global-stores/useAdminStore";
 
 const Home = () => {
@@ -9,5 +10,7 @@ const Home = () => {
     </div>
   );
 };
+
+Home.getLayout = (page: React.ReactNode) => <AdminLayout>{page}</AdminLayout>;
 
 export default Home;

@@ -1,10 +1,12 @@
 import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
 import { useAdminStore } from "src/global-stores/useAdminStore";
+import { useGet } from "src/hooks/ApiHooks";
 import { ChartBar, Home, OutlineGlobe, Settings, User } from "src/icons";
-import { wrappedGet } from "src/utils/wrappedGet";
+import Router from "next/router";
+import { AdminType } from "src/types/AdminType";
 import { NavBar } from "../../ui/Navbar";
 import { Sidebar } from "../../ui/Sidebar";
+import { LogoLoading } from "src/ui/LogoLoading";
 
 const navGroups = [
   {
@@ -41,21 +43,32 @@ const navGroups = [
   },
 ];
 
-const resource = wrappedGet("/api/admin/me");
+export interface AdminLayoutProps {
+  children: React.ReactNode;
+}
 
-const AdminLayout = () => {
-  const res = resource.read();
-
-  const { setAdmin } = useAdminStore();
+const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
+  const { run, error } = useGet<{ data: AdminType }>("/api/admin/me");
+  const { admin, setAdmin } = useAdminStore();
 
   useEffect(() => {
-    if (res?.data?.username) setAdmin(res.data);
+    run().then((res) => {
+      if (res?.data.username) {
+        setAdmin(res.data);
+      }
+    });
   }, []);
+
+  if (error) {
+    Router.push("/login");
+  }
+
+  if (!admin?.username) return <LogoLoading />;
 
   return (
     <main className="flex-c min-h-screen pt-14 lg:pl-[280px]">
       <NavBar />
-      <Outlet />
+      {children}
       <Sidebar navGroups={navGroups} />
     </main>
   );

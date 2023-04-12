@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 import { showToast } from "src/lib/showToast";
 
-export interface QueryOptions {
-  initialValue?: unknown;
+export interface QueryOptions<T> {
+  initialValue?: T;
 }
 
 const DefaultHeader = {
@@ -10,12 +10,12 @@ const DefaultHeader = {
   "Content-Type": "application/json",
 };
 
-export const useGet = <T>(path: string, options?: QueryOptions) => {
+export const useGet = <T>(path: string, options?: QueryOptions<T>) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   const run = useCallback(
-    async (parameter = "") => {
+    async (parameter = ""): Promise<T | undefined> => {
       setLoading(true);
       setError(false);
 

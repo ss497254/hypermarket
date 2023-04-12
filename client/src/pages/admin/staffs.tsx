@@ -1,4 +1,5 @@
 import { CreateStaffButton } from "src/components/CreateStaffButton";
+import AdminLayout from "src/components/layouts/AdminLayout";
 import { useForceRender } from "src/hooks/useForceRender";
 import { StaffType } from "src/types/StaffType";
 
@@ -27,5 +28,7 @@ const Staffs = () => {
     </div>
   );
 };
+
+Staffs.getLayout = (page: React.ReactNode) => <AdminLayout>{page}</AdminLayout>;
 
 export default Staffs;
