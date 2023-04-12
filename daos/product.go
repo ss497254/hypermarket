@@ -12,7 +12,7 @@ func CreateProduct(product *entities.Product) error {
 }
 
 func GetProducts() (*[]entities.Product, error) {
-	rows, err := database.Query("Select * from products")
+	rows, err := database.Query("select * from products")
 	if err != nil {
 		return nil, err
 	}
@@ -35,7 +35,7 @@ func GetProducts() (*[]entities.Product, error) {
 }
 
 func GetProductById(id int) (*entities.Product, error) {
-	row := database.QueryRow("Select * from products where id=$1", id)
+	row := database.QueryRow("select * from products where id=$1", id)
 
 	var product = entities.Product{}
 
@@ -47,10 +47,10 @@ func GetProductById(id int) (*entities.Product, error) {
 	return &product, nil
 }
 
-func UpdateProductById(id uint32) error {
+func UpdateProductById(id int) error {
 	return nil
 }
 
-func DeleteProductById(id uint32) error {
+func DeleteProductById(id int) error {
 	return nil
 }

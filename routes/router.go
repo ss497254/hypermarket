@@ -13,15 +13,18 @@ import (
 func Initalize(app *fiber.App) {
 	apiRoutes := app.Group("/api")
 
-	apiRoutes.Get("/products", middleware.IsAuth, GetProducts)
+	apiRoutes.Get("/products", GetProducts)
+	apiRoutes.Get("/products/:id", GetProductById)
 	apiRoutes.Post("/products", middleware.IsAuth, CreateProduct)
-	apiRoutes.Get("/products/:id", middleware.IsAuth, GetProductsById)
 	apiRoutes.Put("/products/:id", middleware.IsAuth, UpdateProductsById)
 	apiRoutes.Delete("/products/:id", middleware.IsAuth, DeleteProductsById)
 
 	staffRoutes := apiRoutes.Group("/staff")
 	staffRoutes.Post("/login", StaffLogin)
 	staffRoutes.Get("/me", middleware.IsStaff, GetStaff)
+	staffRoutes.Get("/orders", middleware.IsStaff, GetOrdersByStaffUsername)
+	staffRoutes.Post("/orders", middleware.IsStaff, CreateOrder)
+	staffRoutes.Get("/orders/:id", middleware.IsStaff, GetOrderById)
 
 	adminRoutes := apiRoutes.Group("/admin")
 	adminRoutes.Post("/login", AdminLogin)
@@ -29,6 +32,8 @@ func Initalize(app *fiber.App) {
 	adminRoutes.Post("/register", middleware.IsAdmin, AdminRegister)
 	adminRoutes.Get("/staffs", middleware.IsAdmin, GetStaffs)
 	adminRoutes.Post("/staffs", middleware.IsAdmin, StaffRegister)
+	adminRoutes.Get("/orders", middleware.IsAdmin, GetOrders)
+	adminRoutes.Get("/orders/:id", middleware.IsAdmin, GetOrderById)
 
 	if utils.IsDev() {
 		devRouts := apiRoutes.Group("/dev")

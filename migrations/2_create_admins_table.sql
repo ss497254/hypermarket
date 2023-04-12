@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS admins(
-    "username" varchar(32) primary key not null,
-    "firstName" varchar(64) not null,
-    "lastName" varchar(64) not null,
-    "password" varchar(255) not null
+    "username" varchar(32) PRIMARY KEY NOT NULL,
+    "firstName" varchar(64) NOT NULL,
+    "lastName" varchar(64) NOT NULL,
+    "password" varchar(255) NOT NULL
 );

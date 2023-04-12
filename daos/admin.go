@@ -12,7 +12,7 @@ func CreateAdmin(admin *entities.Admin) error {
 }
 
 func GetAdminByUsername(username string) (*entities.Admin, error) {
-	row := database.QueryRow("Select * from admins where username=$1", username)
+	row := database.QueryRow("select * from admins where username=$1", username)
 
 	var admin = entities.Admin{}
 

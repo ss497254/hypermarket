@@ -6,7 +6,7 @@ import (
 )
 
 func GetStaffs() (*[]entities.Staff, error) {
-	rows, err := database.Query("Select * from staffs")
+	rows, err := database.Query("select * from staffs")
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ func CreateStaff(staff *entities.Staff) error {
 }
 
 func GetStaffByUsername(username string) (*entities.Staff, error) {
-	row := database.QueryRow("Select * from staffs where username=$1", username)
+	row := database.QueryRow("select * from staffs where username=$1", username)
 
 	var staff = entities.Staff{}
 

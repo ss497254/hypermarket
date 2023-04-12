@@ -29,7 +29,7 @@ func CreateProduct(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 		"success": true,
-		"message": "product add successfully",
+		"message": "product added successfully",
 	})
 }
 
@@ -49,7 +49,7 @@ func GetProducts(c *fiber.Ctx) error {
 	})
 }
 
-func GetProductsById(c *fiber.Ctx) error {
+func GetProductById(c *fiber.Ctx) error {
 	id, err := c.ParamsInt("id")
 	if err != nil {
 		return c.Status(400).JSON(fiber.Map{

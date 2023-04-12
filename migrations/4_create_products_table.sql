@@ -1,8 +1,8 @@
 CREATE TABLE products(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "name" varchar(255),
-    "price" INTEGER not null,
-    "quantity" INTEGER not null,
+    "price" INTEGER NOT NULL,
+    "quantity" INTEGER NOT NULL,
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
