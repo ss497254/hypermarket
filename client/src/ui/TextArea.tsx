@@ -6,11 +6,12 @@ export interface TextAreaProps
   label: string;
   containerClassName?: string;
   error?: string;
+  resize?: boolean;
 }
 
 export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (
-    { className, containerClassName, error, label, required, ...props },
+    { className, containerClassName, error, label, required, resize, ...props },
     ref,
   ) => {
     const id: any = useMemo(generateId, []);
@@ -36,10 +37,11 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           required={required}
           className={[
             "w-full py-2.5 px-3 placeholder-gray-500 bg-inherit focus:outline-none",
+            !resize && "resize-none",
             className,
           ].join(" ")}
           {...props}
-        ></textarea>
+        />
       </div>
     );
   },

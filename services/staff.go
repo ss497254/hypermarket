@@ -5,6 +5,10 @@ import (
 	"hypermarket/entities"
 )
 
+func GetStaffs() (*[]entities.Staff, error) {
+	return daos.GetStaffs()
+}
+
 func GetStaffByUsername(username string) (*entities.Staff, error) {
 	return daos.GetStaffByUsername(username)
 }

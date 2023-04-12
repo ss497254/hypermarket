@@ -22,7 +22,7 @@ export const StyledModal: React.FC<props> = ({
         <h4 className="p-5 text-2xl font-bold md:px-7">{heading}</h4>
         <div
           className={[
-            "p-5 overflow-y-scroll max-h-[60vh] text-base md:p-8 border-y border-gray-200",
+            "p-5 overflow-y-scroll max-h-[70vh] text-base md:p-8 border-y border-gray-200",
             className,
           ].join(" ")}
           {...props}

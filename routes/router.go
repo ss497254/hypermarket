@@ -14,7 +14,6 @@ func Initalize(app *fiber.App) {
 	apiRoutes := app.Group("/api")
 
 	apiRoutes.Post("/login", StaffLogin)
-	apiRoutes.Post("/register", middleware.IsAdmin, StaffRegister)
 	apiRoutes.Get("/me", middleware.IsStaff, GetStaff)
 
 	apiRoutes.Get("/products", middleware.IsAuth, GetProducts)
@@ -27,7 +26,8 @@ func Initalize(app *fiber.App) {
 	adminRoutes.Post("/login", AdminLogin)
 	adminRoutes.Get("/me", middleware.IsAdmin, GetAdmin)
 	adminRoutes.Post("/register", middleware.IsAdmin, AdminRegister)
-	adminRoutes.Post("/staff/register", middleware.IsAdmin, StaffRegister)
+	adminRoutes.Get("/staffs", middleware.IsAdmin, GetStaffs)
+	adminRoutes.Post("/staffs", middleware.IsAdmin, StaffRegister)
 
 	if utils.IsDev() {
 		devRouts := apiRoutes.Group("/dev")

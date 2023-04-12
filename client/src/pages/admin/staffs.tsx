@@ -1,30 +1,37 @@
-import { CreateStaffButton } from "src/components/CreateStaffButton";
+import { useCallback, useEffect } from "react";
+import { AddStaffButton } from "src/components/AddStaffButton";
 import AdminLayout from "src/components/layouts/AdminLayout";
+import { useGet } from "src/hooks/ApiHooks";
 import { useForceRender } from "src/hooks/useForceRender";
+import { NextPageWithLayout } from "src/types/NextPageWithLayout";
 import { StaffType } from "src/types/StaffType";
+import { StaffTable } from "src/ui/StaffTable";
 
-const staffs: StaffType[] = [];
+let staffs: StaffType[] = [];
 
-let render: () => void;
-const onSave = (staff: StaffType) => {
-  staffs.push(staff);
-  render();
-};
+const Staffs: NextPageWithLayout = () => {
+  const render = useForceRender();
 
-const Staffs = () => {
-  render = useForceRender();
+  const { run, loading, error } = useGet<{ data: StaffType[] }>(
+    "/api/admin/staffs",
+  );
+
+  const onSave = useCallback((data: StaffType) => {
+    staffs.push(data);
+    render();
+  }, []);
+
+  useEffect(() => {
+    run().then((res) => res && (staffs = res.data));
+  }, []);
 
   return (
-    <div className="grid p-1 pb-6 bg-indigo-300 md:p-4 bg-dark-900 md:grid-cols-2">
-      <div className="justify-between m-4 mt-8 md:col-span-2 f">
+    <div className="max-w-5xl m-4 md:m-8">
+      <div className="justify-between mt-8 mb-4 md:col-span-2 f">
         <h4>Staffs</h4>
-        <CreateStaffButton onSave={onSave} />
+        <AddStaffButton onSave={onSave} />
       </div>
-      {staffs.map((staff) => (
-        <pre className="h-screen whitespace-pre-line">
-          {JSON.stringify(staff)}
-        </pre>
-      ))}
+      <StaffTable staffs={staffs} error={error} loading={loading} />
     </div>
   );
 };

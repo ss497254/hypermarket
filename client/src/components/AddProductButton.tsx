@@ -18,11 +18,7 @@ export const AddProductButton: React.FC<props> = memo(({ onSave }) => {
 
   return (
     <>
-      <Button
-        className="!px-8"
-        loading={loading}
-        onClick={() => setOpen(!open)}
-      >
+      <Button className="!px-8" onClick={() => setOpen(!open)}>
         Add Product
       </Button>
       <StyledModal
@@ -35,10 +31,11 @@ export const AddProductButton: React.FC<props> = memo(({ onSave }) => {
             <Button
               btn="success"
               className="!px-10"
+              loading={loading}
               onClick={handleSubmit(
                 async (data: any) => {
                   const res = await run(data);
-                  if (res.success) {
+                  if (res && res.success) {
                     onSave({
                       ...data,
                     });
