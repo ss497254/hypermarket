@@ -29,7 +29,7 @@ export const StyledModal: React.FC<props> = ({
         >
           {children}
         </div>
-        <div className="flex justify-end p-4 bg-gray-100 rounded-b-lg">
+        <div className="flex flex-row-reverse p-4 bg-gray-100 rounded-b-lg">
           {footer}
         </div>
       </div>

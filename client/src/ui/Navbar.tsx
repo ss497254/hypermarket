@@ -9,7 +9,7 @@ export const NavBar: React.FC<props> = () => {
   const { toggleOpen: toggleSidebar } = useSidebarDrawerStore();
 
   return (
-    <div className="absolute top-0 z-50 flex h-14 items-center px-4 font-semibold">
+    <div className="flex items-center px-4 font-semibold bg-white h-14">
       <IconButton onClick={toggleSidebar} className="mr-4 lg:hidden">
         <Hamburger />
       </IconButton>

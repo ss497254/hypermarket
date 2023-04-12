@@ -66,7 +66,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
   if (!admin?.username) return <LogoLoading />;
 
   return (
-    <main className="flex-c min-h-screen pt-14 lg:pl-[280px]">
+    <main className="flex-c min-h-screen bg-indigo-300 lg:ml-[280px]">
       <NavBar />
       {children}
       <Sidebar navGroups={navGroups} />

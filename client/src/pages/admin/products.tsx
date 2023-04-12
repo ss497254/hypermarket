@@ -1,30 +1,37 @@
-import { CreateProductButton } from "src/components/CreateProductButton";
+import { useCallback, useEffect } from "react";
+import { AddProductButton } from "src/components/AddProductButton";
 import AdminLayout from "src/components/layouts/AdminLayout";
+import { useGet } from "src/hooks/ApiHooks";
 import { useForceRender } from "src/hooks/useForceRender";
+import { NextPageWithLayout } from "src/types/NextPageWithLayout";
 import { ProductType } from "src/types/ProductType";
+import { ProductTable } from "src/ui/ProductTable";
 
-const products: ProductType[] = [];
+let products: ProductType[] = [];
 
-let render: () => void;
-const onSave = (product: ProductType) => {
-  products.push(product);
-  render();
-};
+const Products: NextPageWithLayout = () => {
+  const render = useForceRender();
 
-const Products = () => {
-  render = useForceRender();
+  const { run, loading, error } = useGet<{ data: ProductType[] }>(
+    "/api/products",
+  );
+
+  const onSave = useCallback((data: ProductType) => {
+    products.push(data);
+    render();
+  }, []);
+
+  useEffect(() => {
+    run().then((res) => res && (products = res.data));
+  }, []);
 
   return (
-    <div className="grid p-1 pb-6 bg-indigo-300 md:p-4 bg-dark-900 md:grid-cols-2">
-      <div className="justify-between m-4 mt-8 md:col-span-2 f">
+    <div className="max-w-5xl m-4 md:m-8">
+      <div className="justify-between mt-8 mb-4 md:col-span-2 f">
         <h4>Products</h4>
-        <CreateProductButton onSave={onSave} />
+        <AddProductButton onSave={onSave} />
       </div>
-      {products.map((product) => (
-        <pre className="h-screen whitespace-pre-line">
-          {JSON.stringify(product)}
-        </pre>
-      ))}
+      <ProductTable products={products} error={error} loading={loading} />
     </div>
   );
 };

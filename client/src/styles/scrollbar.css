@@ -1,3 +1,10 @@
+/* for firefox */
+* {
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+  scrollbar-color: #d8d8d8;
+}
+
 ::-webkit-scrollbar {
   @apply w-1 lg:w-2;
 }
@@ -8,6 +15,10 @@
 }
 
 .scroll-thin::-webkit-scrollbar {
+  @apply w-1;
+}
+
+.scroll-thin::-webkit-scrollbar-track {
   @apply w-1;
 }
 
@@ -24,6 +35,6 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300;
+  @apply bg-dark-600;
   border-radius: 5px;
 }

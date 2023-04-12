@@ -1,5 +1,6 @@
 import React, { memo, useState } from "react";
 import { useForm } from "react-hook-form";
+import { usePost } from "src/hooks/ApiHooks";
 import { showToast } from "src/lib/showToast";
 import { ProductType } from "src/types/ProductType";
 import { Button } from "src/ui/Button";
@@ -10,47 +11,55 @@ interface props {
   onSave: (x: ProductType) => void;
 }
 
-export const CreateProductButton: React.FC<props> = memo(({ onSave }) => {
+export const AddProductButton: React.FC<props> = memo(({ onSave }) => {
   const [open, setOpen] = useState(false);
+  const { run, loading, error } = usePost("/api/products");
   const { register, handleSubmit, reset } = useForm();
 
   return (
     <>
-      <Button className="!px-8" onClick={() => setOpen(!open)}>
+      <Button
+        className="!px-8"
+        loading={loading}
+        onClick={() => setOpen(!open)}
+      >
         Add Product
       </Button>
       <StyledModal
         className="max-w-lg w-[90vw] space-y-4 flex-c"
-        heading="Create Product"
+        heading="Add Product"
         open={open}
         setOpen={setOpen}
         footer={
           <>
+            <Button
+              btn="success"
+              className="!px-10"
+              onClick={handleSubmit(
+                async (data: any) => {
+                  const res = await run(data);
+                  if (res.success) {
+                    onSave({
+                      ...data,
+                    });
+                    setOpen(false);
+                    reset();
+                  } else {
+                  }
+                },
+                () => {
+                  showToast({ message: "Cannot add product" }, "error");
+                },
+              )}
+            >
+              Save
+            </Button>
             <Button
               btn="danger"
               className="!px-8 mr-4"
               onClick={() => setOpen(false)}
             >
               Cancel
-            </Button>
-            <Button
-              btn="success"
-              className="!px-10"
-              onClick={handleSubmit(
-                (data: any) => {
-                  onSave({
-                    ...data,
-                    id: new Date().getTime(),
-                  });
-                  setOpen(false);
-                  reset();
-                },
-                () => {
-                  showToast({ message: "Cannot create channel" }, "error");
-                },
-              )}
-            >
-              Save
             </Button>
           </>
         }

@@ -39,7 +39,6 @@ func Initalize(app *fiber.App) {
 	app.Use("/", filesystem.New(filesystem.Config{
 		Root:         http.FS(client.WebsiteSource),
 		PathPrefix:   "dist",
-		NotFoundFile: "dist/index.html",
-		Browse:       true,
+		NotFoundFile: "dist/404.html",
 	}))
 }
