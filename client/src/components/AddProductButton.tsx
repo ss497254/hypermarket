@@ -13,7 +13,7 @@ interface props {
 
 export const AddProductButton: React.FC<props> = memo(({ onSave }) => {
   const [open, setOpen] = useState(false);
-  const { run, loading, error } = usePost("/api/products");
+  const { run, loading } = usePost("/api/products");
   const { register, handleSubmit, reset } = useForm();
 
   return (

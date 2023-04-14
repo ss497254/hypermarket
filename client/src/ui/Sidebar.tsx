@@ -36,7 +36,7 @@ export const Sidebar: React.FC<props> = ({ navGroups, data }) => {
     <Drawer
       {...value}
       className="pb-10 overflow-y-scroll text-white hide-scroll"
-      permanent={width > 1024}
+      permanent={width >= 1024}
     >
       <Logo className="mx-auto my-6 bg-white rounded-full" size={128} />
       <div className="px-4 py-2.5 mx-4 capitalize mb-8 bg-gray-400 rounded-md bg-opacity-20">

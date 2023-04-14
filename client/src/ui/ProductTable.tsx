@@ -19,6 +19,7 @@ export const ProductTable: React.FC<ProductTableProps> = ({
       <table className="w-full border border-collapse border-black table-auto">
         <thead className="text-gray-700 bg-blue-50 rounded-t-md">
           <tr>
+            <th className="px-6 w-[5%] py-3 border">ID</th>
             <th className="px-6 py-3 border">Product name</th>
             <th className="px-6 py-3 border">Price</th>
             <th className="px-6 py-3 border">Quantity</th>
@@ -40,10 +41,8 @@ export const ProductTable: React.FC<ProductTableProps> = ({
           ) : (
             products.map((product, idx) => (
               <tr key={product.id || idx} className="bg-white">
-                <td
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 border whitespace-nowrap"
-                >
+                <td className="px-6 py-4 text-center border">{product.id}</td>
+                <td scope="row" className="px-6 py-4 border">
                   {product.name}
                 </td>
                 <td className="px-6 py-4 border">{product.price}</td>

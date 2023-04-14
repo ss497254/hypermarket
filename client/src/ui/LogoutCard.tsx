@@ -42,10 +42,10 @@ export const LogoutCard: React.FC<LogoutCardProps> = ({ path }) => {
       >
         Are you sure to log out your account?
       </StyledModal>
-      <div className="flex flex-col bg-white rounded-lg shadow-md">
+      <div className="flex flex-col bg-white rounded-lg shadow-md lg:w-1/2">
         <h4 className="p-8 py-6 text-2xl font-bold">Log out</h4>
         <hr />
-        <div className="h-full p-8">Logout your account</div>
+        <div className="h-full p-8">Logout from your account</div>
         <hr />
         <div className="flex justify-end p-4 bg-gray-100 rounded-b-lg">
           <Button
