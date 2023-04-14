@@ -5,10 +5,14 @@ import (
 	"hypermarket/entities"
 )
 
-func CreateProduct(product *entities.Product) error {
-	_, err := database.DB.Exec("insert into products(name, price, quantity) values($1, $2, $3)", product.Name, product.Price, product.Quantity)
+func CreateProduct(product *entities.Product) (int64, error) {
+	res, err := database.DB.Exec("insert into products(name, price, quantity) values($1, $2, $3)", product.Name, product.Price, product.Quantity)
 
-	return err
+	if err != nil {
+		return 0, err
+	}
+
+	return res.LastInsertId()
 }
 
 func GetProducts() (*[]entities.Product, error) {

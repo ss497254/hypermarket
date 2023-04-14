@@ -18,7 +18,7 @@ func CreateProduct(c *fiber.Ctx) error {
 		})
 	}
 
-	err := services.CreateProduct(product)
+	id, err := services.CreateProduct(product)
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
 			"success": false,
@@ -28,6 +28,7 @@ func CreateProduct(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(fiber.Map{
+		"data":    fiber.Map{"id": id},
 		"success": true,
 		"message": "product added successfully",
 	})

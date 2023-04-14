@@ -18,7 +18,7 @@ func CreateOrder(c *fiber.Ctx) error {
 		})
 	}
 
-	err := services.CreateOrder(order)
+	id, err := services.CreateOrder(order)
 	if err != nil {
 		return c.Status(500).JSON(fiber.Map{
 			"success": false,
@@ -28,6 +28,7 @@ func CreateOrder(c *fiber.Ctx) error {
 	}
 
 	return c.JSON(fiber.Map{
+		"data":    fiber.Map{"id": id},
 		"success": true,
 		"message": "order added successfully",
 	})

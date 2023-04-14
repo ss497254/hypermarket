@@ -5,7 +5,7 @@ import (
 	"hypermarket/entities"
 )
 
-func CreateProduct(product *entities.Product) error {
+func CreateProduct(product *entities.Product) (int64, error) {
 	return daos.CreateProduct(product)
 }
 
