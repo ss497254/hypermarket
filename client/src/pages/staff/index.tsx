@@ -1,12 +1,15 @@
 import StaffLayout from "src/components/layouts/StaffLayout";
-import { useAdminStore } from "src/global-stores/useAdminStore";
+import { useStaffStore } from "src/global-stores/useStaffStore";
+import { Card } from "src/ui/Card";
+import { Input } from "src/ui/Input";
+import { OrderMenuTable } from "src/ui/OrderMenuTable";
 
 const Home = () => {
-  const { admin } = useAdminStore();
+  const { staff } = useStaffStore();
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen bg-indigo-300">
-      {admin?.username}
+    <div className="max-w-5xl m-4 md:m-8">
+      <OrderMenuTable />
     </div>
   );
 };

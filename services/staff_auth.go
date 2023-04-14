@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"hypermarket/daos"
 	"hypermarket/entities"
 	"hypermarket/lib"
@@ -14,7 +13,7 @@ func StaffLogin(username string, password string) error {
 	}
 
 	if err := lib.ComparePasswords(staff.Password, password); err != nil {
-		return fmt.Errorf("staff authentication failed, %s", err.Error())
+		return err
 	}
 
 	return nil

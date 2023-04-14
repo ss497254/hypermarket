@@ -14,9 +14,13 @@ export const LogoutCard: React.FC<LogoutCardProps> = ({ path }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const handleLogout = async () => {
-    await run();
-    showToast({ message: "Logout successfully" }, "success");
-    window.location.pathname = "/";
+    const res = await run();
+    if (res && res.success) {
+      showToast({ message: "Logout successfully" }, "success");
+      window.location.pathname = "/";
+    } else {
+      showToast({ message: "Unable to logout, do it manually" }, "error");
+    }
   };
 
   return (

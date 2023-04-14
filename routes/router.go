@@ -25,6 +25,7 @@ func Initalize(app *fiber.App) {
 	staffRoutes.Get("/orders", middleware.IsStaff, GetOrdersByStaffUsername)
 	staffRoutes.Post("/orders", middleware.IsStaff, CreateOrder)
 	staffRoutes.Get("/orders/:id", middleware.IsStaff, GetOrderById)
+	staffRoutes.Post("/logout", middleware.IsStaff, Logout)
 
 	adminRoutes := apiRoutes.Group("/admin")
 	adminRoutes.Post("/login", AdminLogin)
@@ -34,6 +35,7 @@ func Initalize(app *fiber.App) {
 	adminRoutes.Post("/staffs", middleware.IsAdmin, StaffRegister)
 	adminRoutes.Get("/orders", middleware.IsAdmin, GetOrders)
 	adminRoutes.Get("/orders/:id", middleware.IsAdmin, GetOrderById)
+	adminRoutes.Post("/logout", middleware.IsAdmin, Logout)
 
 	if utils.IsDev() {
 		devRouts := apiRoutes.Group("/dev")

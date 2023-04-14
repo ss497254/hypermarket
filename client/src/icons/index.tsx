@@ -43,7 +43,7 @@ export { default as Rocket } from "./SolidRocket";
 export { default as Search } from "./SolidSearch";
 export { default as Settings } from "./SolidSettings";
 export { default as SimpleMegaphone } from "./SolidSimpleMegaphone";
-export { default as Staff } from "./SolidStaff";
+export { default as EditIcon } from "./EditIcon";
 export { default as SolidTick } from "./SolidTick";
 export { default as Time } from "./SolidTime";
 export { default as Trash } from "./SolidTrash";
