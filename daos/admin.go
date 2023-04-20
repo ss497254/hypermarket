@@ -24,8 +24,10 @@ func GetAdminByUsername(username string) (*entities.Admin, error) {
 	return &admin, nil
 }
 
-func UpdateAdminByUsername(username string) error {
-	return nil
+func UpdateAdmin(admin *entities.Admin) error {
+	_, err := database.DB.Exec("update admins set firstName = $1, lastName = $2, password = $3 where username = $4", admin.FirstName, admin.LastName, admin.Password, admin.Username)
+
+	return err
 }
 
 func DeleteAdminByUsernameAndPassword(username string, password string) error {

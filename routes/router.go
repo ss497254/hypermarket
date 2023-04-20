@@ -30,6 +30,7 @@ func Initalize(app *fiber.App) {
 	adminRoutes := apiRoutes.Group("/admin")
 	adminRoutes.Post("/login", AdminLogin)
 	adminRoutes.Get("/me", middleware.IsAdmin, GetAdmin)
+	adminRoutes.Put("/me", middleware.IsAdmin, UpdateAdmin)
 	adminRoutes.Post("/register", middleware.IsAdmin, AdminRegister)
 	adminRoutes.Get("/staffs", middleware.IsAdmin, GetStaffs)
 	adminRoutes.Post("/staffs", middleware.IsAdmin, StaffRegister)

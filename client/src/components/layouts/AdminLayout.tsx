@@ -70,7 +70,7 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
       <NavBar />
       {children}
       <Sidebar
-        data={{ username: admin.username, role: "admin" }}
+        data={{ firstName: admin.firstName || "Admin's name", role: "admin" }}
         navGroups={navGroups}
       />
     </main>

@@ -69,7 +69,7 @@ const StaffLayout: React.FC<StaffLayoutProps> = ({ children }) => {
       <NavBar />
       {children}
       <Sidebar
-        data={{ username: staff.username, role: "staff" }}
+        data={{ firstName: staff.firstName || "Staff's name", role: "staff" }}
         navGroups={navGroups}
       />
     </main>
