@@ -1,5 +1,5 @@
 import React, { memo, useRef, useState } from "react";
-import { useGet } from "src/hooks/ApiHooks";
+import { useGet, usePost } from "src/hooks/ApiHooks";
 import { Plus, Trash } from "src/icons";
 import { ProductType } from "src/types/ProductType";
 import { Button } from "./Button";
@@ -8,40 +8,44 @@ import { StyledModal } from "./StyledModal";
 import { useForceRender } from "src/hooks/useForceRender";
 import { OrderType } from "src/types/OrderType";
 import ReactToPrint from "react-to-print";
-import { InputRadio } from "./InputRadio";
+import { RadioButtons } from "./RadioButtons";
+import { useStaffStore } from "src/global-stores/useStaffStore";
 
 interface OrderMenuTableProps {
   onSubmit: (x: OrderType) => void;
 }
 const rows = new Map();
+const itemQuantity = new Map();
 let render: () => void;
 
 const OrderRow = memo(
-  ({ id, name, price, setTotal }: ProductType & { setTotal: any }) => {
+  ({ id, name, price, setAmount }: ProductType & { setAmount: any }) => {
     const [value, setValue] = useState("");
     const parsedValue = price * (parseInt(value) || 0);
-    console.log(parsedValue);
 
     return (
       <tr className="bg-white">
         <td className="w-[10%] border text-center">{id}</td>
         <td className="w-[50%] px-3 border">{name}</td>
-        <td className="w-[15%] border text-center">{price}</td>
-        <td className="w-[15%] border text-center">
+        <td className="w-[15%] border px-3">{price}</td>
+        <td className="w-[15%] border">
           <input
             type="number"
             value={value}
             onChange={(e) => {
-              setTotal(
-                (total: number) =>
-                  total - parsedValue + price * (parseInt(e.target.value) || 0),
+              setAmount(
+                (amount: number) =>
+                  amount -
+                  parsedValue +
+                  price * (parseInt(e.target.value) || 0),
               );
               setValue(e.target.value);
+              itemQuantity.set(id, { id, quantity: e.target.value });
             }}
-            className="w-[90%] outline-none p-2 border rounded border-gray-400"
+            className="p-2 mx-3 border max-w-[120px] border-gray-400 rounded outline-none w-max"
           />
         </td>
-        <td className="text-center border">{parsedValue}</td>
+        <td className="px-3 border">{parsedValue}</td>
         <td className="px-4 py-2 border">
           <Button
             btn="danger"
@@ -49,7 +53,7 @@ const OrderRow = memo(
             className="ml-auto w-9 h-9"
             onClick={() => {
               rows.delete(id);
-              setTotal((total: number) => total - parsedValue);
+              setAmount((amount: number) => amount - parsedValue);
               render?.();
             }}
           >
@@ -119,8 +123,11 @@ export const OrderMenuTable: React.FC<OrderMenuTableProps> = ({ onSubmit }) => {
   render = useForceRender();
   const [openPrintModal, setOpenPrintModal] = useState(false);
   const [openProductModal, setOpenProductModal] = useState(false);
-  const [total, setTotal] = useState(0);
+  const [payment_method, setPaymentMethod] = useState("");
+  const [amount, setAmount] = useState(0);
   const tableRef = useRef<any>();
+  const { staff } = useStaffStore();
+  const { run, loading } = usePost("/api/staff/orders");
 
   return (
     <div className="w-full overflow-x-scroll rounded-md shadow remove-scroll">
@@ -132,9 +139,20 @@ export const OrderMenuTable: React.FC<OrderMenuTableProps> = ({ onSubmit }) => {
         footer={
           <>
             <ReactToPrint
-              onBeforePrint={() => console.log(rows)}
+              onBeforePrint={async () => {
+                if (!payment_method) return;
+
+                const res = await run({
+                  staff_username: staff?.username,
+                  payment_method,
+                  amount,
+                  products: Array.from(itemQuantity.values()),
+                });
+                if (res && res.success) {
+                }
+              }}
               trigger={() => (
-                <Button btn="success" className="!px-10">
+                <Button btn="success" className="!px-10" loading={loading}>
                   Print
                 </Button>
               )}
@@ -150,11 +168,11 @@ export const OrderMenuTable: React.FC<OrderMenuTableProps> = ({ onSubmit }) => {
           </>
         }
       >
-        <p className="mb-1 -mt-4">Payable amount {total}.</p>
-        <InputRadio
-          value=""
+        <p className="mb-1 -mt-4">Payable amount {amount}.</p>
+        <RadioButtons
+          value={payment_method}
+          onChange={setPaymentMethod}
           heading="Choose payment method"
-          name="payment_method"
           options={["UPI", "Cash", "Debit Card"]}
         />
       </StyledModal>
@@ -182,7 +200,7 @@ export const OrderMenuTable: React.FC<OrderMenuTableProps> = ({ onSubmit }) => {
             </tr>
           ) : (
             Array.from(rows.values()).map((product, idx) => (
-              <OrderRow key={idx} setTotal={setTotal} {...product} />
+              <OrderRow key={idx} setAmount={setAmount} {...product} />
             ))
           )}
           <tr className="bg-gray-100">
@@ -191,8 +209,10 @@ export const OrderMenuTable: React.FC<OrderMenuTableProps> = ({ onSubmit }) => {
                 <Plus className="mr-2" size={12} /> Add new product
               </Button>
             </td>
-            <td className="w-[15%] px-6 py-3 font-semibold border">G. Total</td>
-            <td className="w-[15%] px-6 py-3 font-semibold border">{total}</td>
+            <td className="w-[15%] p-3 text-center font-semibold border">
+              Amount
+            </td>
+            <td className="w-[15%] p-3 font-semibold border">{amount}</td>
             <td className="px-4">
               <Button
                 btn="success"
