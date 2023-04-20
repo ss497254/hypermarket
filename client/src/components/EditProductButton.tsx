@@ -1,6 +1,6 @@
 import React, { memo, useState } from "react";
 import { useForm } from "react-hook-form";
-import { usePost } from "src/hooks/ApiHooks";
+import { usePut } from "src/hooks/ApiHooks";
 import { showToast } from "src/lib/showToast";
 import { ProductType } from "src/types/ProductType";
 import { Button } from "src/ui/Button";
@@ -13,7 +13,7 @@ interface props {
 
 export const EditProductButton: React.FC<props> = memo(({ onEdit }) => {
   const [open, setOpen] = useState(false);
-  const { run, loading } = usePost("/api/products");
+  const { run, loading } = usePut("/api/products");
   const { register, handleSubmit, reset } = useForm();
 
   return (

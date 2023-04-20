@@ -103,6 +103,52 @@ export const usePost = (path: string) => {
   return { loading, error, run };
 };
 
+export const usePut = (path: string) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const run = useCallback(
+    async (data: unknown = {}) => {
+      setLoading(true);
+      setError(false);
+
+      try {
+        const res = await fetch(path, {
+          credentials: "include",
+          headers: DefaultHeader,
+          method: "PUT",
+          body: JSON.stringify(data),
+        });
+
+        if (
+          res.ok &&
+          res.headers.get("Content-Type")?.includes("application/json")
+        ) {
+          setLoading(false);
+          return res.json();
+        }
+
+        throw new Error(await res.text());
+      } catch (e) {
+        showToast(
+          {
+            message: "API ERROR",
+            desc: (e as Error).message,
+          },
+          "error",
+        );
+      }
+
+      setLoading(false);
+      setError(true);
+      return null;
+    },
+    [path],
+  );
+
+  return { loading, error, run };
+};
+
 export const useDelete = (path: string) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);

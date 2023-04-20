@@ -17,8 +17,8 @@ func GetProductById(id int) (*entities.Product, error) {
 	return daos.GetProductById(id)
 }
 
-func UpdateProductById(id int) error {
-	return daos.UpdateProductById(id)
+func UpdateProduct(product *entities.Product) error {
+	return daos.UpdateProduct(product)
 }
 
 func DeleteProductById(id int) error {

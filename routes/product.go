@@ -75,8 +75,30 @@ func GetProductById(c *fiber.Ctx) error {
 	})
 }
 
-func UpdateProductsById(c *fiber.Ctx) error {
-	return nil
+func UpdateProduct(c *fiber.Ctx) error {
+	product := new(entities.Product)
+
+	if err := c.BodyParser(product); err != nil {
+		return c.Status(400).JSON(fiber.Map{
+			"success": false,
+			"message": "invalid data received",
+			"error":   err.Error(),
+		})
+	}
+
+	err := services.UpdateProduct(product)
+	if err != nil {
+		return c.Status(500).JSON(fiber.Map{
+			"success": false,
+			"message": "unable to update product",
+			"error":   err.Error(),
+		})
+	}
+
+	return c.JSON(fiber.Map{
+		"success": true,
+		"message": "product updated successfully",
+	})
 }
 
 func DeleteProductsById(c *fiber.Ctx) error {

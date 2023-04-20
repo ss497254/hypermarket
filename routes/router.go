@@ -16,7 +16,7 @@ func Initalize(app *fiber.App) {
 	apiRoutes.Get("/products", GetProducts)
 	apiRoutes.Get("/products/:id", GetProductById)
 	apiRoutes.Post("/products", middleware.IsAuth, CreateProduct)
-	apiRoutes.Put("/products/:id", middleware.IsAuth, UpdateProductsById)
+	apiRoutes.Put("/products", middleware.IsAuth, UpdateProduct)
 	apiRoutes.Delete("/products/:id", middleware.IsAuth, DeleteProductsById)
 
 	staffRoutes := apiRoutes.Group("/staff")

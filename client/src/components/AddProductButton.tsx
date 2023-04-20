@@ -37,6 +37,7 @@ export const AddProductButton: React.FC<props> = memo(({ onSave }) => {
                   const res = await run(data);
                   if (res && res.success) {
                     onSave({
+                      ...res.data,
                       ...data,
                     });
                     setOpen(false);

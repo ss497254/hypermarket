@@ -51,8 +51,10 @@ func GetProductById(id int) (*entities.Product, error) {
 	return &product, nil
 }
 
-func UpdateProductById(id int) error {
-	return nil
+func UpdateProduct(product *entities.Product) error {
+	_, err := database.DB.Exec("update products set name = $1, price = $2, quantity = $3 where id = $4", product.Name, product.Price, product.Quantity, product.Id)
+
+	return err
 }
 
 func DeleteProductById(id int) error {

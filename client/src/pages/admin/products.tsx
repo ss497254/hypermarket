@@ -23,7 +23,9 @@ const Products: NextPageWithLayout = () => {
   }, []);
 
   const onEdit = useCallback((data: ProductType) => {
-    products.push(data);
+    products.forEach((x, idx) => {
+      if (x.id === data.id) products[idx] = data;
+    });
     render();
   }, []);
 
