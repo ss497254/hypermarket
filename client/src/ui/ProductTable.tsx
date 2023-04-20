@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Spinner from "src/icons/Loading";
 import { ProductType } from "src/types/ProductType";
 
@@ -7,6 +7,17 @@ interface ProductTableProps {
   loading?: boolean;
   error?: boolean;
 }
+
+const ProductRow = memo(({ name, price, id, quantity }: ProductType) => (
+  <tr className="bg-white">
+    <td className="px-6 py-4 text-center border">{id}</td>
+    <td scope="row" className="px-6 py-4 border">
+      {name}
+    </td>
+    <td className="px-6 py-4 border">{price}</td>
+    <td className="px-6 py-4 border">{quantity}</td>
+  </tr>
+));
 
 export const ProductTable: React.FC<ProductTableProps> = ({
   products,
@@ -39,16 +50,7 @@ export const ProductTable: React.FC<ProductTableProps> = ({
               </td>
             </tr>
           ) : (
-            products.map((product, idx) => (
-              <tr key={product.id || idx} className="bg-white">
-                <td className="px-6 py-4 text-center border">{product.id}</td>
-                <td scope="row" className="px-6 py-4 border">
-                  {product.name}
-                </td>
-                <td className="px-6 py-4 border">{product.price}</td>
-                <td className="px-6 py-4 border">{product.quantity}</td>
-              </tr>
-            ))
+            products.map((product) => <ProductRow {...product} />)
           )}
         </tbody>
       </table>

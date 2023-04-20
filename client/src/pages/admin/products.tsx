@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { AddProductButton } from "src/components/AddProductButton";
+import { EditProductButton } from "src/components/EditProductButton";
 import AdminLayout from "src/components/layouts/AdminLayout";
 import { useGet } from "src/hooks/ApiHooks";
 import { useForceRender } from "src/hooks/useForceRender";
@@ -21,15 +22,22 @@ const Products: NextPageWithLayout = () => {
     render();
   }, []);
 
+  const onEdit = useCallback((data: ProductType) => {
+    products.push(data);
+    render();
+  }, []);
+
   useEffect(() => {
     run().then((res) => res && (products = res.data));
   }, []);
 
   return (
     <div className="max-w-5xl m-4 md:m-8">
-      <div className="justify-between my-6 md:col-span-2 f">
+      <div className="my-6 space-x-4 md:col-span-2 f">
         <h4>Products</h4>
+        <div className="flex-grow" />
         <AddProductButton onSave={onSave} />
+        <EditProductButton onEdit={onEdit} />
       </div>
       <ProductTable products={products} error={error} loading={loading} />
     </div>

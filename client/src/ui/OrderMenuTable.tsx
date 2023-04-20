@@ -11,7 +11,7 @@ interface OrderMenuTableProps {}
 const rows = new Map();
 let render: () => void;
 
-const Row = memo(
+const OrderRow = memo(
   ({ id, name, price, setTotal }: ProductType & { setTotal: any }) => {
     const [value, setValue] = useState(0);
 
@@ -125,7 +125,7 @@ export const OrderMenuTable: React.FC<OrderMenuTableProps> = () => {
             </tr>
           ) : (
             Array.from(rows.values()).map((product, idx) => (
-              <Row key={idx} setTotal={setTotal} {...product} />
+              <OrderRow key={idx} setTotal={setTotal} {...product} />
             ))
           )}
           <tr className="bg-gray-100">

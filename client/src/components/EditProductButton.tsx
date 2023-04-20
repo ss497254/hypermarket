@@ -8,18 +8,18 @@ import { Input } from "src/ui/Input";
 import { StyledModal } from "src/ui/StyledModal";
 
 interface props {
-  onSave: (x: ProductType) => void;
+  onEdit: (x: ProductType) => void;
 }
 
-export const AddProductButton: React.FC<props> = memo(({ onSave }) => {
+export const EditProductButton: React.FC<props> = memo(({ onEdit }) => {
   const [open, setOpen] = useState(false);
   const { run, loading } = usePost("/api/products");
   const { register, handleSubmit, reset } = useForm();
 
   return (
     <>
-      <Button className="!px-8" btn="success" onClick={() => setOpen(!open)}>
-        Add Product
+      <Button className="!px-8" onClick={() => setOpen(!open)}>
+        Edit Product
       </Button>
       <StyledModal
         className="max-w-lg w-[90vw] space-y-4 flex-c"
@@ -36,7 +36,7 @@ export const AddProductButton: React.FC<props> = memo(({ onSave }) => {
                 async (data: any) => {
                   const res = await run(data);
                   if (res && res.success) {
-                    onSave({
+                    onEdit({
                       ...data,
                     });
                     setOpen(false);
@@ -61,6 +61,13 @@ export const AddProductButton: React.FC<props> = memo(({ onSave }) => {
           </>
         }
       >
+        <Input
+          label="Id"
+          type="number"
+          containerClassName="flex-grow"
+          required
+          {...register("id", { required: true })}
+        />
         <Input
           label="Name"
           containerClassName="flex-grow"

@@ -3,12 +3,14 @@ package routes
 import (
 	"hypermarket/entities"
 	"hypermarket/services"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func CreateOrder(c *fiber.Ctx) error {
 	order := new(entities.Order)
+	order.Date = time.Now()
 
 	if err := c.BodyParser(order); err != nil {
 		return c.Status(400).JSON(fiber.Map{
