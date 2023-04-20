@@ -17,6 +17,7 @@ func Init(start func(cmd *cobra.Command, args []string)) {
 	}
 
 	rootCmd.AddCommand(generateConfigCmd)
+	rootCmd.AddCommand(migrateCmd)
 	rootCmd.PersistentFlags().String("config", "./config.json", "path to config.json file (default is ./config.json)")
 }
 

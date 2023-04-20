@@ -17,7 +17,7 @@ func GetOrderById(id int) (*entities.Order, error) {
 	return daos.GetOrderById(id)
 }
 
-func GetOrdersByStaffUsername(staff_username string) (*entities.Order, error) {
+func GetOrdersByStaffUsername(staff_username string) (*[]entities.Order, error) {
 	return daos.GetOrdersByStaffUsername(staff_username)
 }
 

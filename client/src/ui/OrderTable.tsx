@@ -16,8 +16,9 @@ export const OrderTable: React.FC<OrderTableProps> = ({ orders, loading }) => {
       <table className="w-full border border-collapse border-black table-auto">
         <thead className="text-gray-700 bg-blue-50 rounded-t-md">
           <tr>
+            <th className="w-[5%] px-6 py-3 border">Id</th>
             <th className="w-1/4 px-6 py-3 border">Staff username</th>
-            <th className="w-1/4 px-6 py-3 border">Amount</th>
+            <th className="w-[20%] px-6 py-3 border">Amount</th>
             <th className="w-1/4 px-6 py-3 border">Payment method</th>
             <th className="w-1/4 px-6 py-3 border">Date</th>
           </tr>
@@ -38,14 +39,17 @@ export const OrderTable: React.FC<OrderTableProps> = ({ orders, loading }) => {
           ) : (
             orders.map((order) => (
               <tr key={order.id} className="bg-white">
+                <td className="w-[5%] text-center py-3 border">{order.id}</td>
                 <td className="w-1/4 px-6 py-3 border">
                   {order.staff_username}
                 </td>
-                <td className="w-1/4 px-6 py-3 border">{order.amount}</td>
+                <td className="w-[20%] px-6 py-3 border">{order.amount}</td>
                 <td className="w-1/4 px-6 py-3 border">
                   {order.payment_method}
                 </td>
-                <td className="w-1/4 px-6 py-3 border">{order.date}</td>
+                <td className="w-1/4 px-6 py-3 border">
+                  {order.date.replace("T", " ").replace(":00Z", "")}
+                </td>
               </tr>
             ))
           )}
