@@ -3,8 +3,8 @@ import { createPortal } from "react-dom";
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   open: boolean;
-  children: React.ReactNode;
   setOpen: (x: boolean) => void;
+  children: React.ReactNode;
 }
 
 export const Modal: React.FC<ModalProps> = ({

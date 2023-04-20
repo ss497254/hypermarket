@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import { useGet } from "src/hooks/ApiHooks";
 import { Plus, Trash } from "src/icons";
 import { ProductType } from "src/types/ProductType";
@@ -6,14 +6,21 @@ import { Button } from "./Button";
 import { Input } from "./Input";
 import { StyledModal } from "./StyledModal";
 import { useForceRender } from "src/hooks/useForceRender";
+import { OrderType } from "src/types/OrderType";
+import ReactToPrint from "react-to-print";
+import { InputRadio } from "./InputRadio";
 
-interface OrderMenuTableProps {}
+interface OrderMenuTableProps {
+  onSubmit: (x: OrderType) => void;
+}
 const rows = new Map();
 let render: () => void;
 
 const OrderRow = memo(
   ({ id, name, price, setTotal }: ProductType & { setTotal: any }) => {
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState("");
+    const parsedValue = price * (parseInt(value) || 0);
+    console.log(parsedValue);
 
     return (
       <tr className="bg-white">
@@ -25,16 +32,16 @@ const OrderRow = memo(
             type="number"
             value={value}
             onChange={(e) => {
-              setTotal((total: number) => {
-                total -= price * (value || 0);
-                return total + price * (parseInt(e.target.value) || 0);
-              });
-              setValue(parseInt(e.target.value));
+              setTotal(
+                (total: number) =>
+                  total - parsedValue + price * (parseInt(e.target.value) || 0),
+              );
+              setValue(e.target.value);
             }}
             className="w-[90%] outline-none p-2 border rounded border-gray-400"
           />
         </td>
-        <td className="text-center border">{(value || 0) * price}</td>
+        <td className="text-center border">{parsedValue}</td>
         <td className="px-4 py-2 border">
           <Button
             btn="danger"
@@ -42,8 +49,8 @@ const OrderRow = memo(
             className="ml-auto w-9 h-9"
             onClick={() => {
               rows.delete(id);
+              setTotal((total: number) => total - parsedValue);
               render?.();
-              setTotal((total: number) => total - price * (value || 0));
             }}
           >
             <Trash size={14} />
@@ -54,43 +61,88 @@ const OrderRow = memo(
   },
 );
 
-export const OrderMenuTable: React.FC<OrderMenuTableProps> = () => {
-  const [open, setOpen] = useState(false);
-  render = useForceRender();
+interface apProps {
+  open: boolean;
+  setOpen: (x: boolean) => void;
+}
+const AddProuductToTable = memo(({ open, setOpen }: apProps) => {
   const [id, setId] = useState<string>();
-  const [total, setTotal] = useState(0);
   const { run, loading } = useGet<{
     data: ProductType;
     success: boolean;
   }>("/api/products");
 
   return (
+    <StyledModal
+      open={open}
+      className="w-96"
+      setOpen={setOpen}
+      heading="Add new product to order"
+      footer={
+        <>
+          <Button
+            btn="success"
+            loading={loading}
+            className="!px-10"
+            onClick={async () => {
+              const res = await run(`/${id}`);
+              if (res && res.success) {
+                rows.set(res.data.id, res.data);
+                setOpen(!open);
+                setId(undefined);
+              }
+            }}
+          >
+            Save
+          </Button>
+          <Button
+            btn="danger"
+            onClick={() => setOpen(!open)}
+            className="!px-8 mr-4"
+          >
+            Cancel
+          </Button>
+        </>
+      }
+    >
+      <Input
+        label="Product Id"
+        value={id}
+        onChange={(e) => setId(e.target.value)}
+        type="number"
+      />
+    </StyledModal>
+  );
+});
+
+export const OrderMenuTable: React.FC<OrderMenuTableProps> = ({ onSubmit }) => {
+  render = useForceRender();
+  const [openPrintModal, setOpenPrintModal] = useState(false);
+  const [openProductModal, setOpenProductModal] = useState(false);
+  const [total, setTotal] = useState(0);
+  const tableRef = useRef<any>();
+
+  return (
     <div className="w-full overflow-x-scroll rounded-md shadow remove-scroll">
       <StyledModal
-        open={open}
+        open={openPrintModal}
         className="w-96"
-        setOpen={setOpen}
-        heading="Add new product to order"
+        setOpen={setOpenPrintModal}
+        heading="Complete order"
         footer={
           <>
-            <Button
-              btn="success"
-              loading={loading}
-              className="!px-10"
-              onClick={async () => {
-                const res = await run(`/${id}`);
-                if (res && res.success) {
-                  rows.set(res.data.id, res.data);
-                  setOpen(!open);
-                  setId(undefined);
-                }
-              }}
-            >
-              Save
-            </Button>
+            <ReactToPrint
+              onBeforePrint={() => console.log(rows)}
+              trigger={() => (
+                <Button btn="success" className="!px-10">
+                  Print
+                </Button>
+              )}
+              content={() => tableRef.current}
+            />
             <Button
               btn="danger"
-              onClick={() => setOpen(!open)}
+              onClick={() => setOpenPrintModal(!openPrintModal)}
               className="!px-8 mr-4"
             >
               Cancel
@@ -98,14 +150,19 @@ export const OrderMenuTable: React.FC<OrderMenuTableProps> = () => {
           </>
         }
       >
-        <Input
-          label="Product Id"
-          value={id}
-          onChange={(e) => setId(e.target.value)}
-          type="number"
+        <p className="mb-1 -mt-4">Payable amount {total}.</p>
+        <InputRadio
+          value=""
+          heading="Choose payment method"
+          name="payment_method"
+          options={["UPI", "Cash", "Debit Card"]}
         />
       </StyledModal>
-      <table className="w-full border border-collapse">
+      <AddProuductToTable
+        open={openProductModal}
+        setOpen={setOpenProductModal}
+      />
+      <table className="w-full border border-collapse" ref={tableRef}>
         <thead className="bg-blue-100 rounded-t-md">
           <tr>
             <th className="w-[10%] py-3 border">Id</th>
@@ -130,14 +187,18 @@ export const OrderMenuTable: React.FC<OrderMenuTableProps> = () => {
           )}
           <tr className="bg-gray-100">
             <td colSpan={3} className="w-[60%] py-3 px-6 border">
-              <Button onClick={() => setOpen(!open)}>
+              <Button onClick={() => setOpenProductModal(!openProductModal)}>
                 <Plus className="mr-2" size={12} /> Add new product
               </Button>
             </td>
             <td className="w-[15%] px-6 py-3 font-semibold border">G. Total</td>
             <td className="w-[15%] px-6 py-3 font-semibold border">{total}</td>
             <td className="px-4">
-              <Button btn="success" className="w-full">
+              <Button
+                btn="success"
+                className="w-full"
+                onClick={() => setOpenPrintModal(!openPrintModal)}
+              >
                 Print
               </Button>
             </td>
